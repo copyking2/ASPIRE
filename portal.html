@@ -49,13 +49,28 @@
         <small>Password Resilience Study</small>
       </span>
     </a>
-    <nav aria-label="Primary">
+    <nav class="desktop-nav" aria-label="Primary">
       <a href="index.html">Home</a>
       <a href="registration.html">ASPIRE</a>
       <a href="sign.html">Sign In</a>
       <a href="portal.html" class="active" aria-current="page">Analytics Portal</a>
       <a href="records.html">Data Records</a>
     </nav>
+    <div class="nav-actions">
+      <input class="mobile-nav-toggle" id="mobile-nav-toggle-portal" type="checkbox" />
+      <label class="mobile-nav-trigger" for="mobile-nav-toggle-portal" aria-label="Toggle navigation menu">
+        <span aria-hidden="true"></span>
+      </label>
+      <label class="mobile-nav-backdrop" for="mobile-nav-toggle-portal" aria-hidden="true"></label>
+      <nav class="mobile-nav-drawer" aria-label="Primary">
+        <label class="mobile-nav-close" for="mobile-nav-toggle-portal" aria-label="Close navigation">×</label>
+        <a href="index.html">Home</a>
+        <a href="registration.html">ASPIRE</a>
+        <a href="sign.html">Sign In</a>
+        <a href="portal.html" class="active" aria-current="page">Analytics Portal</a>
+        <a href="records.html">Data Records</a>
+      </nav>
+    </div>
   </header>
 
   <div class="page-shell">
@@ -92,24 +107,26 @@
          ============================================================ -->
     <div id="dashboard" hidden>
     <header class="app-header">
-      <button class="rail-toggle" id="railToggle" type="button" aria-label="Toggle navigation rail" aria-pressed="true">
-        <span class="rail-toggle-bar"></span>
-        <span class="rail-toggle-bar"></span>
-        <span class="rail-toggle-bar"></span>
-      </button>
-      <div class="brand">
-        <div class="logo" aria-hidden="true">A</div>
-        <div>
-          <h1>ASPIRE Research Portal</h1>
-          <small>Password Resilience Study &mdash; Live Telemetry</small>
+      <div class="app-header-top">
+        <button class="rail-toggle" id="railToggle" type="button" aria-label="Toggle navigation rail" aria-pressed="true">
+          <span class="rail-toggle-bar"></span>
+          <span class="rail-toggle-bar"></span>
+          <span class="rail-toggle-bar"></span>
+        </button>
+        <div class="brand">
+          <div class="logo" aria-hidden="true">A</div>
+          <div>
+            <h1>ASPIRE Research Portal</h1>
+            <small>Password Resilience Study &mdash; Live Telemetry</small>
+          </div>
         </div>
-      </div>
-      <div class="header-actions">
-        <span class="sr-only" id="srStatus">Signed in as researcher.</span>
-        <button class="btn" id="refreshBtn" type="button">Refresh</button>
-        <button class="btn" id="exportBtn" type="button">Export CSV</button>
-        <button class="btn danger" id="clearBtn" type="button">Clear data</button>
-        <button class="btn" id="logoutBtn" type="button">Sign out</button>
+        <div class="header-actions">
+          <span class="sr-only" id="srStatus">Signed in as researcher.</span>
+          <button class="btn" id="refreshBtn" type="button">Refresh</button>
+          <button class="btn" id="exportBtn" type="button">Export CSV</button>
+          <button class="btn danger" id="clearBtn" type="button">Clear data</button>
+          <button class="btn" id="logoutBtn" type="button">Sign out</button>
+        </div>
       </div>
       <!-- Anchored profile data — first/last name rigidly in the far corner -->
       <div class="app-subheader" id="subheader">
@@ -275,6 +292,7 @@
               <button class="filter-btn" data-filter="strong">Strong</button>
             </div>
           </div>
+          <p class="logs-hint">Swipe sideways to scan the full submission history.</p>
           <!-- Scroll-trapped table container: max-height locks so the page
              never horizontal-scrolls even with hundreds of rows. -->
           <div class="logs-scroll">

@@ -28,13 +28,28 @@
         <small>Password Resilience Study</small>
       </span>
     </a>
-    <nav aria-label="Primary">
+    <nav class="desktop-nav" aria-label="Primary">
       <a href="index.html">Home</a>
       <a href="registration.html">ASPIRE</a>
       <a href="sign.html">Sign In</a>
       <a href="portal.html">Analytics Portal</a>
       <a href="records.html" class="active" aria-current="page">Data Records</a>
     </nav>
+    <div class="nav-actions">
+      <input class="mobile-nav-toggle" id="mobile-nav-toggle-index" type="checkbox" />
+      <label class="mobile-nav-trigger" for="mobile-nav-toggle-index" aria-label="Toggle navigation menu">
+        <span aria-hidden="true"></span>
+      </label>
+      <label class="mobile-nav-backdrop" for="mobile-nav-toggle-index" aria-hidden="true"></label>
+      <nav class="mobile-nav-drawer" aria-label="Primary">
+        <label class="mobile-nav-close" for="mobile-nav-toggle-index" aria-label="Close navigation">×</label>
+        <a href="index.html">Home</a>
+        <a href="registration.html">ASPIRE</a>
+        <a href="sign.html">Sign In</a>
+        <a href="portal.html">Analytics Portal</a>
+        <a href="records.html" class="active" aria-current="page">Data Records</a>
+      </nav>
+    </div>
   </header>
 
   <!-- ============================================================

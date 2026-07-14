@@ -25,13 +25,28 @@
         <small>Password Resilience Study</small>
       </span>
     </a>
-    <nav aria-label="Primary">
+    <nav class="desktop-nav" aria-label="Primary">
       <a href="index.html">Home</a>
       <a href="registration.html">ASPIRE</a>
       <a href="sign.html">Sign In</a>
       <a href="portal.html">Analytics Portal</a>
       <a href="records.html" class="active" aria-current="page">Data Records</a>
     </nav>
+    <div class="nav-actions">
+      <input class="mobile-nav-toggle" id="mobile-nav-toggle-records" type="checkbox" />
+      <label class="mobile-nav-trigger" for="mobile-nav-toggle-records" aria-label="Toggle navigation menu">
+        <span aria-hidden="true"></span>
+      </label>
+      <label class="mobile-nav-backdrop" for="mobile-nav-toggle-records" aria-hidden="true"></label>
+      <nav class="mobile-nav-drawer" aria-label="Primary">
+        <label class="mobile-nav-close" for="mobile-nav-toggle-records" aria-label="Close navigation">×</label>
+        <a href="index.html">Home</a>
+        <a href="registration.html">ASPIRE</a>
+        <a href="sign.html">Sign In</a>
+        <a href="portal.html">Analytics Portal</a>
+        <a href="records.html" class="active" aria-current="page">Data Records</a>
+      </nav>
+    </div>
   </header>
 
   <!-- ============================================================
@@ -110,6 +125,8 @@
     <!-- §4 — Aggregate data grid -->
     <section class="records-grid-section" aria-labelledby="records-grid-h2">
       <h2 id="records-grid-h2">Browse All Recorded Datasets</h2>
+
+      <div class="records-mobile-cards" id="recordsMobileCards" aria-live="polite"></div>
 
       <table class="records-table" id="recordsTable">
         <thead>
@@ -257,11 +274,21 @@
       added:     (r) => new Date(r.added).getTime(),
       collected: (r) => new Date(r.collected).getTime()
     };
+    const recordsMobileCards = document.getElementById('recordsMobileCards');
     const COLUMNS = ['name', 'count', 'added', 'collected'];
 
     let sortKey = null;
     let sortDir = 'none';        // 'asc' | 'desc' | 'none'
     let lastDir = 'asc';         // remembers the last non-none dir per column
+
+    function escapeHtml(str) {
+      return String(str ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
 
     function parseRow(tr) {
       const cells = tr.querySelectorAll('td');
@@ -273,6 +300,32 @@
         actionHtml: cells[4].innerHTML,
         _tr:       tr
       };
+    }
+
+    function renderMobileCards() {
+      if (!recordsMobileCards) return;
+      const tbody = document.getElementById('recordsBody');
+      if (!tbody) return;
+      const rows = Array.from(tbody.querySelectorAll('tr')).map(parseRow);
+      recordsMobileCards.innerHTML = rows.map((row) => `
+        <article class="record-card">
+          <details>
+            <summary>
+              <div class="record-card-title">
+                <strong>${escapeHtml(row.name)}</strong>
+                <span>${row.count.toLocaleString()} entries</span>
+              </div>
+              <span class="record-card-toggle">Details</span>
+            </summary>
+            <div class="record-card-details">
+              <div class="record-card-detail"><span>Added</span><strong>${escapeHtml(row.added)}</strong></div>
+              <div class="record-card-detail"><span>Collected</span><strong>${escapeHtml(row.collected)}</strong></div>
+              <div class="record-card-detail"><span>Entries</span><strong>${row.count.toLocaleString()}</strong></div>
+              <div class="record-card-actions">${row.actionHtml}</div>
+            </div>
+          </details>
+        </article>
+      `).join('');
     }
 
     function applySort() {
@@ -299,6 +352,7 @@
       const frag = document.createDocumentFragment();
       rows.forEach(r => frag.appendChild(r._tr));
       tbody.appendChild(frag);
+      renderMobileCards();
 
       // Update active header arrow
       const activeTh = document.querySelector(
@@ -318,6 +372,8 @@
           applySort();
         });
       });
+
+    renderMobileCards();
   })();
   </script>
 </body>
