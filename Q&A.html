@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ASPIRE — Password Behavior Questionnaire: evaluate student habits and cognitive friction during password creation." />
+  <title>Password Behavior Questionnaire — ASPIRE</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' x2='1' y1='0' y2='1'><stop offset='0' stop-color='%235570ff'/><stop offset='1' stop-color='%237689ff'/></linearGradient></defs><rect width='64' height='64' rx='14' fill='url(%23g)'/><text x='32' y='42' text-anchor='middle' font-family='-apple-system,Segoe UI,Roboto,sans-serif' font-weight='800' font-size='34' fill='white'>A</text></svg>" />
+</head>
+<body class="has-global-header has-global-footer">
+  <header class="global-header" role="banner">
+    <a class="gh-brand" href="index.html" aria-label="ASPIRE — back to hub">
+      <span class="logo" aria-hidden="true">A</span>
+      <span class="gh-brand-text">
+        ASPIRE
+        <small>Password Resilience Study</small>
+      </span>
+    </a>
+    <nav class="desktop-nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="registration.html">ASPIRE</a>
+      <a href="sign.html">Sign In</a>
+      <a href="portal.html">Analytics Portal</a>
+      <a href="records.html">Data Records</a>
+    </nav>
+    <div class="nav-actions">
+      <input class="mobile-nav-toggle" id="mobile-nav-toggle-qa" type="checkbox" />
+      <label class="mobile-nav-trigger" for="mobile-nav-toggle-qa" aria-label="Toggle navigation menu">
+        <span aria-hidden="true"></span>
+      </label>
+      <label class="mobile-nav-backdrop" for="mobile-nav-toggle-qa" aria-hidden="true"></label>
+      <nav class="mobile-nav-drawer" aria-label="Primary">
+        <label class="mobile-nav-close" for="mobile-nav-toggle-qa" aria-label="Close navigation">×</label>
+        <a href="index.html">Home</a>
+        <a href="registration.html">ASPIRE</a>
+        <a href="sign.html">Sign In</a>
+        <a href="portal.html">Analytics Portal</a>
+        <a href="records.html">Data Records</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="qa-page">
+    <section class="qa-shell" aria-labelledby="qa-title-h1">
+      <div class="qa-intro">
+        <div>
+          <h1 id="qa-title-h1">Password Behavior Questionnaire</h1>
+          <p class="qa-sub">
+            Evaluate student habits and cognitive friction during password creation. The question order refreshes on every page load to reduce sequence bias.
+          </p>
+        </div>
+        <p class="qa-note">
+          This survey is rendered dynamically using ASPIRE's randomized instrument engine. Select the option that best describes your behavior for each prompt.
+        </p>
+      </div>
+      <div class="qa-container">
+        <div id="question-container" aria-live="polite"></div>
+        <div class="qa-actions">
+          <p id="feedback-message" class="qa-feedback" aria-live="assertive"></p>
+          <button id="calculate-score-button" type="button" class="submit-btn">Calculate Behavioral Score</button>
+        </div>
+      </div>
+      <p class="qa-summary">This assessment randomly selects 10 of the 30 questions each session. Your selections are not stored by this demo page.</p>
+    </section>
+  </main>
+
+  <footer class="global-footer" role="contentinfo">
+    <div class="gf-inner">
+      <span class="gf-block gf-left">&copy; 2026 ASPIRE. All rights reserved.</span>
+      <span class="gf-block gf-center">Advanced Student Password Interaction and Resilience Evaluator Academic Research Study</span>
+      <span class="gf-block gf-right">Data collected anonymously for behavioral analysis.</span>
+    </div>
+  </footer>
+
+  <script>
+    const questionnaireData = [
+      {
+        question: "When a system requires you to create a completely new password, what is your primary strategy?",
+        options: [
+          { text: "Create a brand new, random string of characters.", score: 4 },
+          { text: "Use a phrase or sentence I can easily remember.", score: 3 },
+          { text: "Modify an existing password by changing a few characters.", score: 2 },
+          { text: "Use a password manager to auto-generate one.", score: 4 }
+        ]
+      },
+      {
+        question: "How frequently do you rely on a familiar 'root' word (e.g., a pet's name, a hometown) as the base of your passwords?",
+        options: [
+          { text: "Always — almost all my passwords share a similar base.", score: 1 },
+          { text: "Frequently — I use a few different root words.", score: 2 },
+          { text: "Rarely — I try to make them distinct.", score: 3 },
+          { text: "Never — I do not use dictionary words or personal names.", score: 4 }
+        ]
+      },
+      {
+        question: "If an account does not force you to use a special character (like @, #, !), do you still include one voluntarily?",
+        options: [
+          { text: "Yes, I always include them for security.", score: 4 },
+          { text: "No, I leave them out because they are harder to type.", score: 1 },
+          { text: "I only include them if the site prompts me to.", score: 2 },
+          { text: "I avoid them entirely if possible.", score: 1 }
+        ]
+      },
+      {
+        question: "When a website rejects your initial password attempt for being 'Too Weak,' what is your immediate reaction?",
+        options: [
+          { text: "Add a capital letter and a number/symbol to the end.", score: 3 },
+          { text: "Swap out letters for similar-looking symbols (e.g., 'a' to '@').", score: 3 },
+          { text: "Completely delete the attempt and start over.", score: 2 },
+          { text: "Feel frustrated and consider abandoning the registration.", score: 1 }
+        ]
+      },
+      {
+        question: "Once you have successfully created a complex password, how do you ensure you will remember it?",
+        options: [
+          { text: "I rely entirely on my memory.", score: 2 },
+          { text: "I click 'Save Password' in my browser.", score: 3 },
+          { text: "I log it into a dedicated third-party password manager.", score: 4 },
+          { text: "I write it in a physical notebook or note app.", score: 3 }
+        ]
+      },
+      {
+        question: "If forced to reset a password every 90 days, which behavior best describes your updating process?",
+        options: [
+          { text: "I append an ascending number to the end (e.g., 123 becomes 124).", score: 2 },
+          { text: "I cycle between 2 or 3 of my favorite passwords.", score: 2 },
+          { text: "I create a completely unique password every time.", score: 4 },
+          { text: "I change a single symbol and keep the rest the same.", score: 1 }
+        ]
+      },
+      {
+        question: "If a live password strength meter displays your password as 'Fair' (but allows you to proceed), what do you do?",
+        options: [
+          { text: "Accept the 'Fair' rating and immediately create the account.", score: 1 },
+          { text: "Spend a few more seconds tweaking it to reach 'Good'.", score: 3 },
+          { text: "It depends entirely on how important the account is.", score: 2 },
+          { text: "I always aim for the maximum strength rating.", score: 4 }
+        ]
+      },
+      {
+        question: "How helpful do you find real-time, text-based suggestions while typing a password?",
+        options: [
+          { text: "Very helpful — I follow the exact advice given.", score: 3 },
+          { text: "Somewhat helpful — I read it, but solve it my own way.", score: 2 },
+          { text: "Distracting — I prefer to just guess until it accepts it.", score: 1 },
+          { text: "Annoying — I ignore it completely.", score: 1 }
+        ]
+      },
+      {
+        question: "Do you ever use keyboard spatial patterns (e.g., 'qwerty', 'asdf', or tracing a shape on the keys)?",
+        options: [
+          { text: "Yes, it is my primary way of making passwords.", score: 1 },
+          { text: "Sometimes, usually just to make the password longer.", score: 2 },
+          { text: "Rarely, only for low-security accounts.", score: 2 },
+          { text: "Never, I know these are easily guessed.", score: 4 }
+        ]
+      },
+      {
+        question: "When forced to include a number, where do you almost always put it?",
+        options: [
+          { text: "At the very end of the password.", score: 1 },
+          { text: "At the very beginning.", score: 2 },
+          { text: "In the middle, replacing a letter (e.g., 'e' to '3').", score: 3 },
+          { text: "I scatter multiple numbers randomly.", score: 4 }
+        ]
+      },
+      {
+        question: "When forced to include a capital letter, where do you almost always put it?",
+        options: [
+          { text: "The very first letter of the password.", score: 2 },
+          { text: "The very last letter of the password.", score: 2 },
+          { text: "I capitalize every other letter.", score: 3 },
+          { text: "I capitalize randomly throughout.", score: 4 }
+        ]
+      },
+      {
+        question: "How does creating a password on a mobile phone change your behavior compared to a desktop?",
+        options: [
+          { text: "I make them much shorter and simpler on mobile.", score: 1 },
+          { text: "I avoid special characters entirely on mobile.", score: 1 },
+          { text: "I use the exact same strategy regardless of device.", score: 3 },
+          { text: "I just let Apple/Google auto-generate it on mobile.", score: 4 }
+        ]
+      },
+      {
+        question: "What is your primary reason for reusing the same password across multiple websites?",
+        options: [
+          { text: "I simply cannot remember dozens of different passwords.", score: 1 },
+          { text: "I don't trust password managers.", score: 1 },
+          { text: "Most of my accounts don't hold sensitive data anyway.", score: 2 },
+          { text: "I don't reuse passwords; they are all unique.", score: 4 }
+        ]
+      },
+      {
+        question: "If you find out a website you use was breached, what is your immediate action?",
+        options: [
+          { text: "Change the password on that site immediately.", score: 3 },
+          { text: "Change the password on that site AND everywhere else I used it.", score: 4 },
+          { text: "Wait to see if my account specifically was hacked.", score: 2 },
+          { text: "Ignore it; breaches happen all the time.", score: 1 }
+        ]
+      },
+      {
+        question: "Have you ever completely abandoned signing up for a service because the password rules were too strict?",
+        options: [
+          { text: "Yes, multiple times.", score: 1 },
+          { text: "Maybe once or twice.", score: 2 },
+          { text: "No, I just push through the frustration.", score: 3 },
+          { text: "No, I find strict rules reassuring.", score: 4 }
+        ]
+      },
+      {
+        question: "When a system asks for a 'Passphrase' instead of a 'Password', how do you respond?",
+        options: [
+          { text: "I type a full, coherent sentence with spaces.", score: 4 },
+          { text: "I string random dictionary words together without spaces.", score: 2 },
+          { text: "I just treat it like a normal password and type a single word.", score: 1 },
+          { text: "I get confused and just use my standard password.", score: 1 }
+        ]
+      },
+      {
+        question: "How do you distinguish between high-security (banking) and low-security (newsletter) passwords?",
+        options: [
+          { text: "Banking gets a unique password; newsletters get my 'junk' password.", score: 1 },
+          { text: "I use variations of the same root word for both.", score: 2 },
+          { text: "I use a password manager, so they are all equally complex.", score: 4 },
+          { text: "I use the exact same password for everything.", score: 1 }
+        ]
+      },
+      {
+        question: "What is your biggest fear regarding password managers?",
+        options: [
+          { text: "If the manager gets hacked, I lose everything.", score: 2 },
+          { text: "I might forget the master password and get locked out.", score: 2 },
+          { text: "The software might glitch and delete my vault.", score: 1 },
+          { text: "I have no fears; I trust them completely.", score: 4 }
+        ]
+      },
+      {
+        question: "If you physically write your passwords down, where is the paper kept?",
+        options: [
+          { text: "In a notebook next to or under my computer.", score: 1 },
+          { text: "In my wallet or purse.", score: 2 },
+          { text: "Hidden in a safe or drawer in another room.", score: 4 },
+          { text: "I never physically write them down.", score: 4 }
+        ]
+      },
+      {
+        question: "How often do you have to click 'Forgot Password' on average?",
+        options: [
+          { text: "Multiple times a week.", score: 1 },
+          { text: "A few times a month.", score: 2 },
+          { text: "Maybe once or twice a year.", score: 3 },
+          { text: "Almost never.", score: 4 }
+        ]
+      },
+      {
+        question: "Which specific requirement usually triggers a 'Forgot Password' scenario for you?",
+        options: [
+          { text: "Forgetting which special character I used.", score: 1 },
+          { text: "Forgetting if I capitalized the first letter.", score: 2 },
+          { text: "Forgetting which number I appended to the end.", score: 2 },
+          { text: "Completely forgetting the root word entirely.", score: 1 }
+        ]
+      },
+      {
+        question: "Do you ever share your passwords with friends, family, or partners?",
+        options: [
+          { text: "Yes, frequently (e.g., Netflix, utilities).", score: 1 },
+          { text: "Only in absolute emergencies.", score: 2 },
+          { text: "I share the password, but change it immediately after.", score: 2 },
+          { text: "Never, under any circumstances.", score: 4 }
+        ]
+      },
+      {
+        question: "If a site asks you to set up Two-Factor Authentication (2FA), what do you do?",
+        options: [
+          { text: "Set it up immediately via an authenticator app.", score: 4 },
+          { text: "Set it up using SMS text messages.", score: 3 },
+          { text: "Skip it unless the system forces me to do it.", score: 1 },
+          { text: "Refuse and look for a different service.", score: 1 }
+        ]
+      },
+      {
+        question: "How do you view the 'Show Password' (eye icon) button during creation?",
+        options: [
+          { text: "I use it constantly to make sure I don't make a typo.", score: 3 },
+          { text: "I use it only at the end to verify before submitting.", score: 2 },
+          { text: "I never use it because someone might look over my shoulder.", score: 1 },
+          { text: "I don't really notice or care about it.", score: 2 }
+        ]
+      },
+      {
+        question: "When substituting letters for symbols (e.g., $ for S), why do you do it?",
+        options: [
+          { text: "It fulfills the symbol requirement without me having to remember a new character.", score: 3 },
+          { text: "I actually think it makes the password uncrackable.", score: 1 },
+          { text: "I only do it because the system rejected my first attempt.", score: 2 },
+          { text: "I never use predictable substitutions.", score: 4 }
+        ]
+      },
+      {
+        question: "Do you ever include personal dates (birthdays, anniversaries) in your passwords?",
+        options: [
+          { text: "Yes, they are easy to remember.", score: 1 },
+          { text: "Sometimes, but I mix up the formatting (e.g., 04 instead of 4).", score: 2 },
+          { text: "I used to, but I stopped after learning it was unsafe.", score: 3 },
+          { text: "Never, I actively avoid personal data.", score: 4 }
+        ]
+      },
+      {
+        question: "What is your reaction to a password limit (e.g., 'Maximum 16 characters')?",
+        options: [
+          { text: "It frustrates me because my standard password is longer.", score: 1 },
+          { text: "It doesn't affect me; mine are usually shorter than 16.", score: 3 },
+          { text: "I think it's a sign of a poorly built, insecure system.", score: 2 },
+          { text: "I just truncate my normal password to fit.", score: 1 }
+        ]
+      },
+      {
+        question: "If an account gets locked after 3 failed login attempts, how does it change your behavior?",
+        options: [
+          { text: "I become highly anxious and immediately click 'Forgot Password' on attempt 2.", score: 1 },
+          { text: "I slow down and type very carefully using the 'Show Password' toggle.", score: 3 },
+          { text: "I get frustrated and contact customer support.", score: 2 },
+          { text: "It rarely happens to me.", score: 4 }
+        ]
+      },
+      {
+        question: "Do you use spaces in your passwords if the system allows them?",
+        options: [
+          { text: "Yes, it makes typing passphrases much easier.", score: 4 },
+          { text: "I would, but I assume most systems will reject them.", score: 2 },
+          { text: "No, spaces feel wrong for passwords.", score: 1 },
+          { text: "I didn't even know you could use spaces.", score: 1 }
+        ]
+      },
+      {
+        question: "Ultimately, when creating a password, what is your primary goal?",
+        options: [
+          { text: "Getting it over with as quickly as possible.", score: 1 },
+          { text: "Ensuring I will never have to reset it later.", score: 3 },
+          { text: "Making it mathematically impossible to crack.", score: 4 },
+          { text: "Balancing decent security with ease of typing.", score: 2 }
+        ]
+      }
+    ];
+
+    let selectedQuestions = [];
+    let selectedScores = {};
+
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function getResultCategory(score) {
+      if (score >= 30) {
+        return {
+          label: 'High Resilience & Low Friction',
+          description: 'Your behavior suggests strong password resilience and good security habits.'
+        };
+      }
+
+      if (score >= 20) {
+        return {
+          label: 'Moderate (Room to Improve)',
+          description: 'You are practicing some healthy habits but can still improve password resilience.'
+        };
+      }
+
+      return {
+        label: 'High Risk / High Friction',
+        description: 'Your responses indicate risky or friction-heavy habits. Consider more secure, manageable approaches.'
+      };
+    }
+
+    function renderQuestions() {
+      selectedQuestions = shuffleArray([...questionnaireData]).slice(0, 10);
+      selectedScores = {};
+
+      const container = document.getElementById('question-container');
+      const feedback = document.getElementById('feedback-message');
+      const qaActions = document.querySelector('.qa-actions');
+
+      if (feedback) {
+        feedback.textContent = '';
+      }
+      if (qaActions) {
+        qaActions.hidden = false;
+      }
+
+      container.innerHTML = '';
+
+      selectedQuestions.forEach((questionItem, questionIndex) => {
+        const card = document.createElement('article');
+        card.className = 'card qa-card';
+
+        const heading = document.createElement('h2');
+        heading.className = 'qa-question-text';
+        heading.textContent = `Q${questionIndex + 1}. ${questionItem.question}`;
+        card.appendChild(heading);
+
+        const optionGroup = document.createElement('div');
+        optionGroup.className = 'qa-options';
+
+        questionItem.options.forEach((option, optionIndex) => {
+          const optionId = `question-${questionIndex}-option-${optionIndex}`;
+
+          const optionWrapper = document.createElement('label');
+          optionWrapper.className = 'qa-option';
+          optionWrapper.setAttribute('for', optionId);
+
+          const optionInput = document.createElement('input');
+          optionInput.type = 'radio';
+          optionInput.name = `question-${questionIndex}`;
+          optionInput.id = optionId;
+          optionInput.value = option.text;
+          optionInput.dataset.score = option.score;
+
+          optionInput.addEventListener('change', () => {
+            selectedScores[questionIndex] = Number(optionInput.dataset.score);
+            if (feedback) {
+              feedback.textContent = '';
+            }
+          });
+
+          const optionLabel = document.createElement('span');
+          optionLabel.className = 'qa-option-label';
+          optionLabel.textContent = option.text;
+
+          optionWrapper.append(optionInput, optionLabel);
+          optionGroup.appendChild(optionWrapper);
+        });
+
+        card.appendChild(optionGroup);
+        container.appendChild(card);
+      });
+    }
+
+    function calculateBehavioralScore() {
+      const feedback = document.getElementById('feedback-message');
+
+      if (Object.keys(selectedScores).length < selectedQuestions.length) {
+        if (feedback) {
+          feedback.textContent = 'Please answer all 10 questions before submitting.';
+        }
+        return;
+      }
+
+      const totalScore = selectedQuestions.reduce((sum, _, index) => {
+        return sum + (selectedScores[index] || 0);
+      }, 0);
+
+      renderResults(totalScore);
+    }
+
+    function renderResults(score) {
+      const container = document.getElementById('question-container');
+      const qaActions = document.querySelector('.qa-actions');
+      const category = getResultCategory(score);
+
+      if (qaActions) {
+        qaActions.hidden = true;
+      }
+
+      container.innerHTML = '';
+
+      const resultsCard = document.createElement('article');
+      resultsCard.className = 'qa-card qa-results-card';
+
+      const title = document.createElement('h2');
+      title.textContent = 'Behavioral Score Results';
+      resultsCard.appendChild(title);
+
+      const description = document.createElement('p');
+      description.textContent = category.description;
+      resultsCard.appendChild(description);
+
+      const scoreOutput = document.createElement('p');
+      scoreOutput.className = 'qa-results-score';
+      scoreOutput.textContent = `${score} / 40`;
+      resultsCard.appendChild(scoreOutput);
+
+      const status = document.createElement('p');
+      status.className = 'qa-results-status';
+      status.textContent = category.label;
+      resultsCard.appendChild(status);
+
+      const retakeButton = document.createElement('button');
+      retakeButton.type = 'button';
+      retakeButton.className = 'submit-btn qa-retake-btn';
+      retakeButton.textContent = 'Retake Questionnaire';
+      retakeButton.addEventListener('click', renderQuestions);
+      resultsCard.appendChild(retakeButton);
+
+      container.appendChild(resultsCard);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const submitButton = document.getElementById('calculate-score-button');
+      if (submitButton) {
+        submitButton.addEventListener('click', calculateBehavioralScore);
+      }
+      renderQuestions();
+    });
+  </script>
+</body>
+</html>

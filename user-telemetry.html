@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="description"
         content="ASPIRE — Your personal password resilience dashboard. Review your submission history, behavioral flow, and Resilience Delta." />
   <title>My Telemetry — ASPIRE Study</title>
@@ -25,22 +25,24 @@
     </a>
     <nav class="desktop-nav" aria-label="Primary">
       <a href="index.html">Home</a>
+      <a href="registration.html">ASPIRE</a>
       <a href="sign.html">Sign In</a>
-      <a href="user-telemetry.html" class="active" aria-current="page">My Telemetry</a>
-      <a href="records.html">Data Records</a>
+      <a href="portal.html">Analytics Portal</a>
+      <a href="records.html" class="active" aria-current="page">Data Records</a>
     </nav>
     <div class="nav-actions">
-      <input class="mobile-nav-toggle" id="mobile-nav-toggle-telemetry" type="checkbox" />
-      <label class="mobile-nav-trigger" for="mobile-nav-toggle-telemetry" aria-label="Toggle navigation menu">
+      <input class="mobile-nav-toggle" id="mobile-nav-toggle-index" type="checkbox" />
+      <label class="mobile-nav-trigger" for="mobile-nav-toggle-index" aria-label="Toggle navigation menu">
         <span aria-hidden="true"></span>
       </label>
-      <label class="mobile-nav-backdrop" for="mobile-nav-toggle-telemetry" aria-hidden="true"></label>
+      <label class="mobile-nav-backdrop" for="mobile-nav-toggle-index" aria-hidden="true"></label>
       <nav class="mobile-nav-drawer" aria-label="Primary">
-        <label class="mobile-nav-close" for="mobile-nav-toggle-telemetry" aria-label="Close navigation">×</label>
+        <label class="mobile-nav-close" for="mobile-nav-toggle-index" aria-label="Close navigation">×</label>
         <a href="index.html">Home</a>
+        <a href="registration.html">ASPIRE</a>
         <a href="sign.html">Sign In</a>
-        <a href="user-telemetry.html" class="active" aria-current="page">My Telemetry</a>
-        <a href="records.html">Data Records</a>
+        <a href="portal.html">Analytics Portal</a>
+        <a href="records.html" class="active" aria-current="page">Data Records</a>
       </nav>
     </div>
   </header>
@@ -58,15 +60,293 @@
     <!-- §1 — Hero -->
     <section class="user-hero" aria-labelledby="user-hero-h1">
       <div class="user-hero-text">
-        <h1 id="user-hero-h1">Your personal telemetry</h1>
+        <div class="hero-kicker">Single-user telemetry</div>
+        <h1 id="user-hero-h1">Telemetry profile</h1>
         <p class="subtitle" id="user-greeting">
           Review how your password choices have evolved over time.
         </p>
+        <div class="identity-strip">
+          <div class="identity-chip">
+            <span class="label">User ID</span>
+            <strong id="userIdentityId">—</strong>
+          </div>
+          <div class="identity-chip">
+            <span class="label">Last active</span>
+            <strong id="userIdentityLast">—</strong>
+          </div>
+          <div class="identity-chip">
+            <span class="label">Resilience score</span>
+            <strong id="userIdentityResilience">—</strong>
+          </div>
+        </div>
       </div>
       <div class="user-hero-actions">
         <a class="btn" href="sign.html">Switch account</a>
         <button class="btn danger" id="signOutBtn" type="button">Sign out</button>
       </div>
+    </section>
+
+    <section class="sandbox-shell" aria-labelledby="sandbox-title">
+      <div class="sandbox-card">
+        <div class="sandbox-heading">
+          <div>
+            <div class="hero-kicker">Secure Practice Sandbox</div>
+            <h2 id="sandbox-title">Train against your past habits</h2>
+            <p class="subtitle">Practice a password in a safe, guided space and compare it against your historical average.</p>
+          </div>
+          <button class="btn sandbox-btn" id="sandboxChallengeBtn" type="button">Random challenge</button>
+        </div>
+
+        <div class="sandbox-command-card" aria-labelledby="sandboxCommandTitle">
+          <div class="sandbox-command-copy">
+            <div class="hero-kicker">Command Center</div>
+            <h3 id="sandboxCommandTitle">Practice a password in a focused, high-tech workspace</h3>
+            <p class="subtitle">Type a candidate passphrase, inspect its live resilience profile, and compare it with your own history without leaving the page.</p>
+            <div class="command-center-suggestion-engine" aria-label="Password suggestion engine">
+              <div class="suggestion-window" id="sandboxSuggestionWindow" role="status" aria-live="polite">
+                <div class="suggestion-window-title">Live suggested alternative</div>
+                <div class="suggestion-window-value" id="sandboxSuggestionValue">Awaiting input</div>
+              </div>
+              <div class="suggestions">
+                <h3>Suggested strong alternatives</h3>
+                <ul class="suggestion-list" id="sandboxSuggestionList"></ul>
+              </div>
+            </div>
+          </div>
+          <div class="sandbox-command-controls">
+            <label class="sandbox-label" for="sandboxPassword">Practice password</label>
+            <div class="input-wrap sandbox-input-wrap">
+              <input class="sandbox-input" id="sandboxPassword" type="text" autocomplete="off" spellcheck="false" placeholder="Try a stronger password" aria-describedby="sandboxHelperText" />
+              <button class="sandbox-info" id="sandboxTooltipTrigger" type="button" aria-label="Explain the current vulnerability">i</button>
+            </div>
+            <div class="sandbox-tooltip" id="sandboxTooltip" role="tooltip">Use the checker below to see why a password might still be weak.</div>
+            <div class="command-center-suggestion" id="commandCenterSuggestion" role="status" aria-live="polite"></div>
+            <button class="submit-btn sandbox-commit" id="sandboxCommitBtn" type="button">Commit to profile</button>
+          </div>
+        </div>
+
+        <div class="sandbox-layout">
+          <div class="sandbox-primary">
+            <div class="sandbox-panel-card sandbox-diagnostic-card">
+              <div class="sandbox-panel-heading">
+                <div class="sandbox-panel-heading-copy">
+                  <span class="status-indicator" aria-hidden="true"></span>
+                  <div class="hero-kicker">REAL-TIME PASSPHRASE RESILIENCE AUDIT</div>
+                </div>
+              </div>
+
+              <div class="telemetry-chamber is-open" aria-live="polite" aria-atomic="false">
+                <div class="telemetry" aria-live="polite" aria-atomic="false">
+                  <div class="telemetry-section telemetry-basic is-open" data-section="basic" data-open="true">
+                    <h4>Basic properties</h4>
+                    <div class="telemetry-basic-grid">
+                      <div class="telemetry-basic-left">
+                        <div class="telemetry-row">
+                          <div class="telemetry-metric">
+                            <span>Strength rating</span>
+                            <span class="v" id="sandboxStrengthValue">—</span>
+                          </div>
+                          <div class="telemetry-track" id="sandboxStrengthBar"><div class="fill"></div></div>
+                        </div>
+                        <div class="telemetry-row">
+                          <div class="telemetry-metric">
+                            <span>String length</span>
+                            <span class="v" id="sandboxLengthValue">0</span>
+                          </div>
+                          <div class="telemetry-track length" id="sandboxLengthBar"><div class="fill"></div></div>
+                        </div>
+                      </div>
+                      <div class="telemetry-basic-right">
+                        <div class="telemetry-row">
+                          <div class="telemetry-metric">
+                            <span>Information entropy</span>
+                            <span class="v" id="sandboxEntropyValue">0.00 bits</span>
+                          </div>
+                          <div class="telemetry-track" id="sandboxEntropyBar"><div class="fill"></div></div>
+                        </div>
+                        <div class="diversity" id="sandboxDiversity" aria-label="Character class presence">
+                          <span class="pill" data-key="lower"><span class="dot"></span>a–z</span>
+                          <span class="pill" data-key="upper"><span class="dot"></span>A–Z</span>
+                          <span class="pill" data-key="digit"><span class="dot"></span>0–9</span>
+                          <span class="pill" data-key="special"><span class="dot"></span>!@#</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="telemetry-section telemetry-alerts is-open" data-section="alerts" data-open="true">
+                    <h4>Behavioral alerts</h4>
+                    <div class="breach" id="sandboxBreach" data-state="idle" role="status" aria-live="polite">
+                      <span class="breach-icon" aria-hidden="true">✔</span>
+                      <div class="breach-body">
+                        <div class="breach-headline" id="sandboxBreachHeadline">Awaiting password input</div>
+                        <div class="breach-sub" id="sandboxBreachSub">Checking common breach patterns and structural weaknesses.</div>
+                      </div>
+                    </div>
+                    <div class="warnings" id="sandboxWarnings" role="status">
+                      <ul id="sandboxWarningList"></ul>
+                    </div>
+                    <div class="pattern-alerts" id="sandboxPatternAlerts" role="status" aria-live="polite"></div>
+                  </div>
+
+                  <div class="telemetry-simulation is-open">
+                    <h4>Cyber attack simulation</h4>
+                    <div class="telemetry-simulation-grid">
+                      <div class="telemetry-simulation-column">
+                        <div class="threats">
+                          <div class="threat-group">
+                            <div class="group-title">Brute force attack <small>raw combinations ÷ throughput</small></div>
+                            <div class="threat-row">
+                              <div class="threat-row-text">
+                                <span class="name">Desktop PC</span>
+                                <span class="time" id="sandboxBfDesktopTime">—</span>
+                              </div>
+                              <div class="threat-track"><div class="fill" id="sandboxBfDesktopFill"></div></div>
+                            </div>
+                            <div class="threat-row">
+                              <div class="threat-row-text">
+                                <span class="name">Discrete GPU</span>
+                                <span class="time" id="sandboxBfGpuTime">—</span>
+                              </div>
+                              <div class="threat-track"><div class="fill" id="sandboxBfGpuFill"></div></div>
+                            </div>
+                            <div class="threat-row">
+                              <div class="threat-row-text">
+                                <span class="name">GPU farm cluster</span>
+                                <span class="time" id="sandboxBfFarmTime">—</span>
+                              </div>
+                              <div class="threat-track"><div class="fill" id="sandboxBfFarmFill"></div></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="telemetry-simulation-column">
+                        <div class="threats">
+                          <div class="threat-group">
+                            <div class="group-title">Optimized dictionary attack <small>search space ÷ 10⁴</small></div>
+                            <div class="threat-row">
+                              <div class="threat-row-text">
+                                <span class="name">Desktop PC</span>
+                                <span class="time" id="sandboxOaDesktopTime">—</span>
+                              </div>
+                              <div class="threat-track"><div class="fill" id="sandboxOaDesktopFill"></div></div>
+                            </div>
+                            <div class="threat-row">
+                              <div class="threat-row-text">
+                                <span class="name">Discrete GPU</span>
+                                <span class="time" id="sandboxOaGpuTime">—</span>
+                              </div>
+                              <div class="threat-track"><div class="fill" id="sandboxOaGpuFill"></div></div>
+                            </div>
+                            <div class="threat-row">
+                              <div class="threat-row-text">
+                                <span class="name">GPU farm cluster</span>
+                                <span class="time" id="sandboxOaFarmTime">—</span>
+                              </div>
+                              <div class="threat-track"><div class="fill" id="sandboxOaFarmFill"></div></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="rgt-root" id="rgtRoot" aria-label="Strength guide and advisory">
+            <div class="rgt-card rgt-score" id="sandboxScoreDial" data-tier="weak" style="--pct: 0;" role="status" aria-live="polite">
+              <div class="rgt-score-gauge">
+                <span class="rgt-score-value" id="sandboxScoreDialValue">0</span>
+              </div>
+              <div class="rgt-score-text">
+                <span class="rgt-score-label">Resilience Score</span>
+                <span class="rgt-score-tier" id="sandboxScoreDialTier">Awaiting input</span>
+                <span class="rgt-score-sub" id="sandboxScoreDialSub">Start typing to compute resilience.</span>
+              </div>
+            </div>
+
+            <div class="rgt-card rgt-grid-card">
+              <h4 class="rgt-card-title">Requirement badges</h4>
+              <div class="rgt-grid" id="sandboxChecklist" aria-label="Password requirements">
+                <div class="rgt-pill" data-rule="length"><span class="rgt-dot"></span> 12+ characters</div>
+                <div class="rgt-pill" data-rule="upper"><span class="rgt-dot"></span> Uppercase letter</div>
+                <div class="rgt-pill" data-rule="lower"><span class="rgt-dot"></span> Lowercase letter</div>
+                <div class="rgt-pill" data-rule="number"><span class="rgt-dot"></span> A number</div>
+                <div class="rgt-pill" data-rule="special"><span class="rgt-dot"></span> Special character</div>
+                <div class="rgt-pill" data-rule="sequence"><span class="rgt-dot"></span> Non-consecutive</div>
+              </div>
+            </div>
+
+            <div class="rgt-card rgt-pattern" aria-label="Pattern and vulnerability breakdown">
+              <h4 class="rgt-card-title">Pattern &amp; Vulnerability Breakdown</h4>
+              <ul class="rgt-bullet" id="sandboxPatternList">
+                <li data-key="keyboard" data-state="idle"><span class="rgt-pattern-label">Keyboard spatial walk</span><span class="rgt-pattern-value" id="sandboxPatternKeyboard">scanning…</span></li>
+                <li data-key="dictionary" data-state="idle"><span class="rgt-pattern-label">Dictionary / name match</span><span class="rgt-pattern-value" id="sandboxPatternDictionary">scanning…</span></li>
+                <li data-key="repetition" data-state="idle"><span class="rgt-pattern-label">Repetition or repeating block</span><span class="rgt-pattern-value" id="sandboxPatternRepetition">scanning…</span></li>
+                <li data-key="substitution" data-state="idle"><span class="rgt-pattern-label">Predictable substitution (a→@)</span><span class="rgt-pattern-value" id="sandboxPatternSubstitution">scanning…</span></li>
+              </ul>
+            </div>
+
+            <div class="rgt-card rgt-advisory" id="rgtAdvisory" aria-label="Why this matters">
+              <h4 class="rgt-card-title">Why This Matters</h4>
+              <p id="sandboxRationaleText">Length and unpredictability multiply the cost of attack. A long passphrase built from unrelated words is far harder to guess than a short, predictable substitution.</p>
+            </div>
+
+            <div class="rgt-helper" id="sandboxHelperText" role="status" aria-live="polite">Start typing to see feedback.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="intervention-modal" id="sandboxInterventionModal" role="dialog" aria-modal="true" aria-labelledby="sandboxInterventionTitle" aria-describedby="sandboxInterventionDesc">
+      <div class="intervention-modal-card">
+        <button class="intervention-modal-close" id="sandboxInterventionClose" type="button" aria-label="Close suggestion">×</button>
+        <div class="intervention-modal-header">
+          <div class="hero-kicker">Real-time suggestion engine</div>
+          <h3 id="sandboxInterventionTitle">Suggested alternative</h3>
+          <p id="sandboxInterventionDesc">We are hardening your current input into a safer passphrase as you type.</p>
+        </div>
+        <div class="suggestion-box">
+          <div class="suggestion-label">Suggested alternative</div>
+          <div class="suggestion-output" id="liveSuggestionOutput">—</div>
+          <button class="btn intervention-modal-action" id="applySuggestionBtn" type="button">Apply Resilient Suggestion</button>
+        </div>
+        <div class="intervention-modal-grid">
+          <article class="intervention-card">
+            <div class="intervention-card-title">Vulnerability scan</div>
+            <ul class="intervention-list" id="liveScanList">
+              <li>Start typing to see the first live warning.</li>
+            </ul>
+          </article>
+          <article class="intervention-card">
+            <div class="intervention-card-title">Strength lift</div>
+            <div class="lift-stat" id="liftStatValue">+0 pts</div>
+            <div class="lift-copy" id="liftStatCopy">A stronger pattern can make the next attempt much harder to crack.</div>
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <section class="user-summary-grid" aria-label="User progress summary">
+      <article class="user-summary-card">
+        <div class="summary-heading">
+          <div class="summary-title">Current status</div>
+          <div class="status-pill" id="userCurrentStatus">Currently: —</div>
+        </div>
+        <div class="progress-track" aria-hidden="true">
+          <div class="progress-bar" id="userProgressBar"></div>
+        </div>
+        <div class="summary-meta" id="userProgressLabel">0% of sessions reached Good or Strong</div>
+      </article>
+      <article class="user-summary-card">
+        <div class="summary-heading">
+          <div class="summary-title">Strength trend</div>
+          <div class="trend-caption" id="userTrendCaption">Tracking tier movement over time</div>
+        </div>
+        <svg class="user-trend-svg" id="userTrendChart" viewBox="0 0 220 90" role="img" aria-label="Strength trend over time"></svg>
+      </article>
     </section>
 
     <!-- §2 — Personal KPIs -->
@@ -94,10 +374,10 @@
     </section>
 
     <!-- §3 — Personal behavioral flow -->
-    <section class="resilience" aria-label="Your behavioral flow">
+    <section class="resilience user-history-section" aria-label="Your behavioral flow">
       <div class="resilience-header">
         <h3>Your behavioral flow
-          <small>vulnerable → intervened → adapted</small>
+          <small>session-by-session evolution</small>
         </h3>
         <div class="resilience-count">
           <strong id="userResilienceCount">0</strong> intervention sessions
@@ -108,11 +388,11 @@
            the <a href="registration.html">simulator</a> to record your
            first behavioral flow.</p>
       </div>
-      <ul class="resilience-flow" id="userResilienceFlow"></ul>
+      <div class="user-history-list" id="userResilienceTimeline"></div>
     </section>
 
     <!-- §4 — Personal submission log -->
-    <section class="logs" aria-label="Your submission history">
+    <section class="logs user-log-section" aria-label="Your submission history">
       <div class="logs-header">
         <h3>Your submission log
           <small id="userLogsCount">0 entries</small>
@@ -125,20 +405,7 @@
           <button class="filter-btn" data-user-filter="strong">Strong</button>
         </div>
       </div>
-      <div class="logs-scroll">
-        <table>
-          <thead>
-            <tr>
-              <th>Time</th>
-              <th>Tier</th>
-              <th>Score</th>
-              <th>Length</th>
-              <th>Password</th>
-            </tr>
-          </thead>
-          <tbody id="userLogsBody"></tbody>
-        </table>
-      </div>
+      <div class="user-log-list" id="userLogList"></div>
       <div class="empty" id="userEmptyState">
         <h3>No submissions yet</h3>
         <p>Open the <a href="registration.html">simulator</a> to record
@@ -154,6 +421,13 @@
       <span class="gf-block gf-right">Data collected anonymously for behavioral analysis.</span>
     </div>
   </footer>
+
+  <div id="detailsModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" aria-label="Close details">&times;</span>
+      <div id="modalBody"></div>
+    </div>
+  </div>
 
   <script>
   (function () {
@@ -195,103 +469,1382 @@
     }
 
     // ----- Filter to this user only ------------------------------
-    const subs       = (loadJSON(SUBMISSIONS_KEY) || []).filter(s => s.username === sessionUser);
-    const intervs    = (loadJSON(INTERV_KEY) || []).filter(i => i.username === sessionUser);
-    const resilience = (loadJSON(RESILIENCE_KEY) || []).filter(r => r.username === sessionUser);
-
-    // ----- KPI cards ---------------------------------------------
-    document.getElementById('userStatTotal').textContent = subs.length;
-
+    let subs       = (loadJSON(SUBMISSIONS_KEY) || []).filter(s => s.username === sessionUser);
+    let intervs    = (loadJSON(INTERV_KEY) || []).filter(i => i.username === sessionUser);
+    let resilience = (loadJSON(RESILIENCE_KEY) || []).filter(r => r.username === sessionUser);
     const tierOrder = { weak: 0, fair: 1, good: 2, strong: 3 };
-    let best = null;
-    subs.forEach(s => {
-      if (!best || (tierOrder[s.tier] ?? 0) > (tierOrder[best.tier] ?? 0)) {
-        best = s;
-      }
-    });
-    document.getElementById('userStatBest').textContent = best
-      ? best.tier.charAt(0).toUpperCase() + best.tier.slice(1)
-      : '—';
+    const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
 
-    document.getElementById('userStatInterv').textContent = intervs.length;
-    const improved = resilience.filter(r => r.outcome === 'improved');
-    if (improved.length) {
-      const deltas = improved
-        .map(r => (r.adaptation && r.adaptation.tierDelta) || 0);
-      const avg = deltas.reduce((a, b) => a + b, 0) / deltas.length;
-      document.getElementById('userStatDelta').textContent =
-        (avg >= 0 ? '+' : '') + avg.toFixed(2);
-    } else {
-      document.getElementById('userStatDelta').textContent = '—';
+    // ----- Sandbox references ----------------------------------
+    const sandboxInput = document.getElementById('sandboxPassword');
+    const sandboxTooltip = document.getElementById('sandboxTooltip');
+    const sandboxTooltipTrigger = document.getElementById('sandboxTooltipTrigger');
+    const sandboxChallengeBtn = document.getElementById('sandboxChallengeBtn');
+    const sandboxChallengeText = document.getElementById('sandboxChallengeText');
+    const sandboxCommitBtn = document.getElementById('sandboxCommitBtn');
+    const sandboxGaugeFill = document.getElementById('sandboxGaugeFill');
+    const sandboxGaugeCopy = document.getElementById('sandboxGaugeCopy');
+    const sandboxHistoryFill = document.getElementById('sandboxHistoryFill');
+    const sandboxHistoryCopy = document.getElementById('sandboxHistoryCopy');
+    const sandboxShell = document.querySelector('.sandbox-card');
+    const sandboxStrengthValue = document.getElementById('sandboxStrengthValue');
+    const sandboxStrengthBar = document.getElementById('sandboxStrengthBar');
+    const sandboxLengthValue = document.getElementById('sandboxLengthValue');
+    const sandboxLengthBar = document.getElementById('sandboxLengthBar');
+    const sandboxEntropyValue = document.getElementById('sandboxEntropyValue');
+    const sandboxEntropyBar = document.getElementById('sandboxEntropyBar');
+    const sandboxDiversity = document.getElementById('sandboxDiversity');
+    const sandboxBreach = document.getElementById('sandboxBreach');
+    const sandboxBreachHeadline = document.getElementById('sandboxBreachHeadline');
+    const sandboxBreachSub = document.getElementById('sandboxBreachSub');
+    const sandboxWarnings = document.getElementById('sandboxWarnings');
+    const sandboxWarningList = document.getElementById('sandboxWarningList');
+    const sandboxHelperText = document.getElementById('sandboxHelperText');
+    const sandboxChecklist = document.getElementById('sandboxChecklist');
+    const sandboxScoreDial = document.getElementById('sandboxScoreDial');
+    const sandboxScoreDialValue = document.getElementById('sandboxScoreDialValue');
+    const sandboxScoreDialTier = document.getElementById('sandboxScoreDialTier');
+    const sandboxScoreDialSub = document.getElementById('sandboxScoreDialSub');
+    const sandboxPatternList = document.getElementById('sandboxPatternList');
+    const sandboxRationaleText = document.getElementById('sandboxRationaleText');
+    const sandboxSuggestionWindow = document.getElementById('sandboxSuggestionWindow');
+    const sandboxSuggestionValue = document.getElementById('sandboxSuggestionValue');
+    const sandboxSuggestionList = document.getElementById('sandboxSuggestionList');
+    const coachingSuggestionOutput = document.getElementById('coachingSuggestionOutput');
+    const coachingDiagnostic = document.getElementById('coachingDiagnostic');
+    const coachingLiftValue = document.getElementById('coachingLiftValue');
+    const coachingApplyBtn = document.getElementById('coachingApplyBtn');
+
+    const COMMON_PASSWORDS = new Set([
+      'password', 'password1', 'password123', '12345678', '123456789',
+      'qwerty', 'qwerty123', 'letmein', 'welcome', 'admin', 'iloveyou',
+      'princess', 'monkey', 'dragon', 'sunshine', 'master', 'football',
+      'shadow', 'ashley', 'bailey', 'passw0rd', 'abc123', '111111',
+      '000000', '654321', 'superman', 'batman'
+    ]);
+    const TLM_POOLS = [
+      { key: 'lower', size: 26, test: p => /[a-z]/.test(p) },
+      { key: 'upper', size: 26, test: p => /[A-Z]/.test(p) },
+      { key: 'digit', size: 10, test: p => /[0-9]/.test(p) },
+      { key: 'special', size: 33, test: p => /[!@#$%^&*()_+\-=\[\]{}|;':",./<>?]/.test(p) }
+    ];
+
+    function scoreLength(L) {
+      if (L < 8) return 0;
+      if (L <= 11) return 5;
+      if (L <= 15) return 20;
+      if (L <= 20) return 28;
+      return 30;
     }
 
-    // ----- Behavioral flow ---------------------------------------
-    document.getElementById('userResilienceCount').textContent = resilience.length;
-    const flowEl     = document.getElementById('userResilienceFlow');
-    const flowEmpty  = document.getElementById('userResilienceEmpty');
-    if (!resilience.length) {
-      flowEmpty.hidden = false;
-    } else {
+    function scoreDiversity(presentCount) {
+      if (presentCount <= 1) return 0;
+      if (presentCount === 2) return 12;
+      if (presentCount === 3) return 20;
+      return 25;
+    }
+
+    function scorePattern(password, scan) {
+      let pts = 25;
+      pts -= scan.penalties.length * 8;
+      return Math.max(0, pts);
+    }
+
+    function scoreEntropy(entropy) {
+      if (entropy < 40) return 0;
+      if (entropy < 60) return 8;
+      if (entropy < 80) return 14;
+      return 20;
+    }
+
+    function tlmTier(scoreOrEntropy) {
+      if (scoreOrEntropy < 36)  return { tier: 'weak',  label: 'Weak' };
+      if (scoreOrEntropy < 66)  return { tier: 'fair',  label: 'Fair' };
+      if (scoreOrEntropy < 86)  return { tier: 'good',  label: 'Good' };
+      if (scoreOrEntropy < 100) return { tier: 'strong', label: 'Strong' };
+      return                      { tier: 'ultra', label: 'Very Strong' };
+    }
+
+    function scoreToTier(score) {
+      return tlmTier(score).tier;
+    }
+
+    function tierLabel(tier) {
+      return { weak: 'Weak', fair: 'Fair', good: 'Good', strong: 'Strong', ultra: 'Very Strong' }[tier] || '—';
+    }
+
+    function evaluate(password) {
+      const passed = {
+        length:   false,
+        upper:    false,
+        lower:    false,
+        number:   false,
+        special:  false,
+        sequence: true
+      };
+      const suggestions = [];
+
+      const value = String(password || '').trim();
+      if (!value) {
+        return {
+          score: 0,
+          tier: 'weak',
+          passed,
+          suggestions: ['Start typing to see feedback.'],
+          isCommon: false,
+          breakdown: { length: 0, diversity: 0, pattern: 0, entropy: 0 },
+          penalties: [],
+          warnings: [],
+          entropy: 0,
+          presentCount: 0
+        };
+      }
+
+      passed.length  = value.length >= 12;
+      passed.upper   = /[A-Z]/.test(value);
+      passed.lower   = /[a-z]/.test(value);
+      passed.number  = /[0-9]/.test(value);
+      passed.special = /[!@#$%^&*(),.?":{}|<>_\-+=\[\]\\;'/`~]/.test(value);
+
+      const present = TLM_POOLS.filter(p => p.test(value));
+      passed.sequence = present.length >= 3 && !scanPatterns(value).penalties
+                           .some(p => p.key === 'sequence');
+
+      const isCommon = COMMON_PASSWORDS.has(value.toLowerCase());
+      const lower = value.toLowerCase();
+      const personalTokens = [sessionUser].filter(t => t && t.length >= 3);
+      const isPersonal = personalTokens.length > 0 && personalTokens.some(t => lower.includes(t.toLowerCase()));
+
+      const scan = scanPatterns(value);
+      const { entropy } = tlmEntropy(value);
+
+      const breakdown = {
+        length:    scoreLength(value.length),
+        diversity: scoreDiversity(present.length),
+        pattern:   scorePattern(value, scan),
+        entropy:   scoreEntropy(entropy)
+      };
+      let raw = breakdown.length + breakdown.diversity + breakdown.pattern + breakdown.entropy;
+
+      if (scan.penalties.length) {
+        const worst = Math.min(...scan.penalties.map(p => p.multiplier));
+        raw *= worst;
+      }
+      if (isCommon)   raw *= 0.30;
+      if (isPersonal) raw *= 0.60;
+
+      const score = Math.max(0, Math.round(raw));
+      const tier  = tlmTier(score).tier;
+
+      if (value.length < 12) {
+        suggestions.push('Add more characters — aim for a minimum of 12 to 16 characters.');
+      }
+      if (present.length < 4) {
+        suggestions.push('Mix uppercase and lowercase letters, and include numbers throughout the password.');
+      }
+      if (scan.penalties.length) {
+        suggestions.push('Remove predictable sequences, personal dates, or standard dictionary words.');
+      }
+      if (!passed.special) {
+        suggestions.push('Add at least one special character (!, @, #, %, …).');
+      } else if (scan.penalties.some(p => p.key === 'lazySymbol')) {
+        suggestions.push('Integrate special characters randomly, avoiding placing a single symbol at the very end.');
+      }
+      if (isCommon)   suggestions.push('This password appears on lists of commonly-leaked passwords — choose a different one.');
+      if (isPersonal) suggestions.push('Avoid using your name, username, or other personal information.');
+      if (!passed.sequence) {
+        suggestions.push('Avoid obvious sequences like "1234" or "abcd".');
+      }
+      if (!suggestions.length || score >= 100) {
+        suggestions.push('Excellent! Your password meets all our security checks.');
+      }
+
+      return {
+        score,
+        tier,
+        passed,
+        suggestions,
+        isCommon,
+        breakdown,
+        penalties: scan.penalties,
+        warnings: scan.warnings,
+        entropy,
+        presentCount: present.length
+      };
+    }
+
+    function tlmEntropy(password) {
+      const present = TLM_POOLS.filter(p => p.test(password));
+      const R = present.reduce((sum, pool) => sum + pool.size, 0);
+      const L = password.length;
+      return { L, R, entropy: (L > 0 && R > 1) ? L * Math.log(R) / Math.LN2 : 0, present };
+    }
+
+    function mapEntropyToNormalizedScore(entropy) {
+      const value = Math.max(0, entropy);
+      if (value < 28) {
+        return { score: Math.round((value / 28) * 30), tier: 'weak', label: 'Weak' };
+      }
+      if (value < 45) {
+        return { score: 31 + Math.round(((value - 28) / 17) * 29), tier: 'fair', label: 'Fair' };
+      }
+      if (value < 60) {
+        return { score: 61 + Math.round(((value - 45) / 15) * 24), tier: 'strong', label: 'Strong' };
+      }
+      return { score: Math.min(100, 86 + Math.round(Math.min(14, ((value - 60) / 40) * 14))), tier: 'ultra', label: 'Very Strong' };
+    }
+
+    function updateCharacterPoolBadges(password) {
+      if (!sandboxDiversity) return;
+      sandboxDiversity.querySelectorAll('.pill').forEach(pill => {
+        const key = pill.dataset.key;
+        const met = key === 'lower' ? /[a-z]/.test(password)
+                  : key === 'upper' ? /[A-Z]/.test(password)
+                  : key === 'digit' ? /[0-9]/.test(password)
+                  : /[!@#$%^&*()_+\-=[\]{}|;':",./<>?]/.test(password);
+        pill.classList.toggle('met', met);
+      });
+    }
+
+    function tlmCrackTime(password, hw, optimized) {
+      if (!password) return { seconds: 0, fraction: 0 };
+      const { R, L } = tlmEntropy(password);
+      if (R <= 1 || L === 0) return { seconds: Infinity, fraction: 1 };
+      const divisor = optimized ? TLM_HARDWARE[hw] * TLM_OPT_DIVISOR : TLM_HARDWARE[hw];
+      const logCombos = L * Math.log10(R);
+      const logDivisor = Math.log10(divisor);
+      const logSeconds = logCombos - logDivisor;
+      let seconds;
+      if (logSeconds > 308) {
+        seconds = Number.MAX_VALUE * Math.pow(10, logSeconds - 308);
+        if (!isFinite(seconds)) seconds = Infinity;
+      } else {
+        seconds = Math.pow(10, logSeconds);
+      }
+      const fraction = seconds === 0 ? 0 : !isFinite(seconds) ? 1 : Math.min(1, Math.max(0, logSeconds) / 30);
+      return { seconds, fraction };
+    }
+
+    const HIBP_RANGE_API = 'https://api.pwnedpasswords.com/range/';
+    let sandboxBreachQuerySeq = 0;
+    let sandboxBreachData = { password: '', count: null, state: 'idle', fetchedAt: 0, pending: false };
+    const breachFmt = new Intl.NumberFormat('en-US');
+
+    async function sha1Hex(input) {
+      if (typeof crypto !== 'undefined' && crypto.subtle) {
+        return crypto.subtle.digest('SHA-1', new TextEncoder().encode(input))
+          .then(buf => Array.from(new Uint8Array(buf))
+            .map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase());
+      }
+      return Promise.resolve(sha1Fallback(input));
+    }
+
+    function sha1Fallback(msg) {
+      const utf8 = unescape(encodeURIComponent(msg));
+      const bytes = new Array(utf8.length);
+      for (let i = 0; i < utf8.length; i++) bytes[i] = utf8.charCodeAt(i);
+      const ml = bytes.length * 8;
+      bytes.push(0x80);
+      while (bytes.length % 64 !== 56) bytes.push(0);
+      for (let i = 7; i >= 0; i--) bytes.push((ml >>> (i * 8)) & 0xff);
+      let h0 = 0x67452301, h1 = 0xEFCDAB89, h2 = 0x98BADCFE,
+          h3 = 0x10325476, h4 = 0xC3D2E1F0;
+      for (let chunk = 0; chunk < bytes.length; chunk += 64) {
+        const w = new Array(80);
+        for (let i = 0; i < 16; i++) {
+          w[i] = (bytes[chunk + i*4] << 24) |
+                 (bytes[chunk + i*4 + 1] << 16) |
+                 (bytes[chunk + i*4 + 2] << 8) |
+                 (bytes[chunk + i*4 + 3]);
+        }
+        for (let i = 16; i < 80; i++) {
+          const v = w[i-3] ^ w[i-8] ^ w[i-14] ^ w[i-16];
+          w[i] = (v << 1) | (v >>> 31);
+        }
+        let a = h0, b = h1, c = h2, d = h3, e = h4;
+        for (let i = 0; i < 80; i++) {
+          let f, k;
+          if (i < 20)      { f = (b & c) | ((~b) & d);        k = 0x5A827999; }
+          else if (i < 40) { f = b ^ c ^ d;                   k = 0x6ED9EBA1; }
+          else if (i < 60) { f = (b & c) | (b & d) | (c & d); k = 0x8F1BBCDC; }
+          else             { f = b ^ c ^ d;                   k = 0xCA62C1D6; }
+          const t = ((a << 5) | (a >>> 27)) + f + e + k + w[i];
+          e = d; d = c; c = (b << 30) | (b >>> 2); b = a; a = t;
+        }
+        h0 = (h0 + a) | 0; h1 = (h1 + b) | 0; h2 = (h2 + c) | 0;
+        h3 = (h3 + d) | 0; h4 = (h4 + e) | 0;
+      }
+      return [h0, h1, h2, h3, h4].map(v => (v >>> 0).toString(16).padStart(8, '0')).join('').toUpperCase();
+    }
+
+    async function hibpLookupCount(password) {
+      const hash = await sha1Hex(password);
+      const prefix = hash.slice(0, 5);
+      const suffix = hash.slice(5).toUpperCase();
+      try {
+        const res = await fetch(HIBP_RANGE_API + prefix, {
+          method: 'GET',
+          headers: { 'Add-Padding': 'true' }
+        });
+        if (!res.ok) return null;
+        const text = await res.text();
+        for (const line of text.split('\n')) {
+          const [s, c] = line.trim().split(':');
+          if (s && s.toUpperCase() === suffix) {
+            const n = parseInt(c, 10);
+            return isNaN(n) ? null : n;
+          }
+        }
+        return 0;
+      } catch (_) {
+        return null;
+      }
+    }
+
+    async function scheduleSandboxBreachLookup(password) {
+      const seq = ++sandboxBreachQuerySeq;
+      if (!password) {
+        sandboxBreachData = { password: '', count: null, state: 'idle', fetchedAt: Date.now(), pending: false };
+        renderSandbox();
+        return;
+      }
+      sandboxBreachData = { password, count: null, state: 'pending', fetchedAt: Date.now(), pending: true };
+      renderSandbox();
+      const count = await hibpLookupCount(password);
+      if (seq !== sandboxBreachQuerySeq) return;
+      const isCommon = COMMON_PASSWORDS.has(password.toLowerCase());
+      const state = count === null ? (isCommon ? 'compromised' : 'secure') : (count > 0 ? 'compromised' : 'secure');
+      sandboxBreachData = { password, count, state, fetchedAt: Date.now(), pending: false };
+      renderSandbox();
+    }
+
+    function getSandboxBreachState(password) {
+      if (!password) return 'idle';
+      if (sandboxBreachData.password === password) return sandboxBreachData.state;
+      if (/password|welcome|qwerty|letmein|admin|login|secret/i.test(password)) return 'compromised';
+      return 'secure';
+    }
+
+    const TLM_HARDWARE = {
+      desktop: 1e9,
+      gpu:     1e12,
+      farm:    1e15
+    };
+    const TLM_OPT_DIVISOR = 1e4;   // optimized attacks reduce search space 10⁴×
+
+    const PATTERNS = {
+      sequence: (pw) => {
+        const seqs = ['abcdefghijklmnopqrstuvwxyz', '0123456789', 'qwertyuiop', 'asdfghjkl', 'zxcvbnm'];
+        const lower = pw.toLowerCase();
+        for (const seq of seqs) {
+          for (let i = 0; i + 4 <= seq.length; i++) {
+            const sub = seq.substring(i, i + 4);
+            if (lower.includes(sub) || lower.includes(sub.split('').reverse().join(''))) {
+              return true;
+            }
+          }
+        }
+        return false;
+      },
+      keyboard: (pw) => {
+        const rows = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm', '1234567890'];
+        const lower = pw.toLowerCase();
+        return rows.some(r =>
+          lower.includes(r.substring(0, 4)) ||
+          lower.includes(r.substring(0, 5)) ||
+          lower.includes(r.split('').reverse().join('').substring(0, 4))
+        );
+      },
+      repetition: (pw) => /(.)\1{2,}/.test(pw),
+      blockRepeat: (pw) => {
+        for (let i = 0; i + 4 <= pw.length; i++) {
+          const a = pw.substring(i, i + 2);
+          if (pw.substring(i + 2, i + 4) === a) return true;
+        }
+        return false;
+      },
+      leetSubstitution: (pw) => {
+        if (pw.length < 6) return false;
+        const lower = pw.toLowerCase();
+        const vowelish = (lower.match(/[aeiou]/g) || []).length;
+        const leetish = (lower.match(/[@!30\$]/g) || []).length;
+        return leetish >= 3 && leetish > vowelish;
+      },
+      yearPattern: (pw) => /\b(19[0-9]{2}|20[0-9]{2})\b/.test(pw),
+      lazySymbol: (pw) => {
+        if (pw.length < 6) return false;
+        const symEdge = (s) => /^[^!@#$%^&*()_+\-=[\]{}|;':",./<>?]*[!@#$%^&*()_+\-=[\]{}|;':",./<>?]$/.test(s)
+                        || /^[!@#$%^&*()_+\-=[\]{}|;':",./<>?][^!@#$%^&*()_+\-=[\]{}|;':",./<>?]*$/.test(s);
+        const symCount = (pw.match(/[!@#$%^&*()_+\-=[\]{}|;':",./<>?]/g) || []).length;
+        return symCount === 1 && symEdge(pw);
+      }
+    };
+
+    function scanPatterns(pw) {
+      const warnings = [];
+      const penalties = [];
+      if (!pw) return { warnings, penalties };
+      // Single source of truth for the warning glyph.  Every
+      // warning emitted below is prefixed with this icon so the
+      // pipeline renders exactly one icon per row.  The CSS
+      // pseudo-element that used to duplicate this icon has been
+      // removed to keep the visual single-source.
+      const ICON = '⚠️ ';
+      const hasSequenceOrKeyboard = PATTERNS.sequence(pw) || PATTERNS.keyboard(pw);
+      if (hasSequenceOrKeyboard) {
+        penalties.push({ key: 'keyboard', multiplier: PATTERNS.keyboard(pw) ? 0.70 : 0.80 });
+        warnings.push(ICON + 'Sequential or keyboard-layout patterns detected (e.g. abc, qwerty).');
+      }
+      if (PATTERNS.repetition(pw) || PATTERNS.blockRepeat(pw)) {
+        penalties.push({ key: 'repetition', multiplier: 0.90 });
+        warnings.push(ICON + 'Repeated characters or blocks detected (e.g. aaa, abab).');
+      }
+      if (PATTERNS.yearPattern(pw)) {
+        penalties.push({ key: 'year', multiplier: 0.85 });
+        warnings.push(ICON + 'Recognisable year/date pattern detected (e.g. 1990, 2023).');
+      }
+      if (PATTERNS.leetSubstitution(pw)) {
+        penalties.push({ key: 'leet', multiplier: 0.90 });
+        warnings.push(ICON + 'Predictable leet substitutions detected (e.g. @ for a, 1 for i).');
+      }
+      if (PATTERNS.lazySymbol(pw)) {
+        penalties.push({ key: 'lazySymbol', multiplier: 0.90 });
+        warnings.push(ICON + 'Special character is only placed at the boundary — integrate symbols randomly.');
+      }
+      return { warnings, penalties };
+    }
+
+    function evaluateSandbox(password) {
+      const value = String(password || '').trim();
+      const result = evaluate(value);
+      return {
+        ...result,
+        label: tierLabel(result.tier),
+        checks: result.passed
+      };
+    }
+
+    function getSandboxTooltip(result) {
+      if (!result) return 'Use the checker below to see why a password might still be weak.';
+      if (!result.checks.length) return 'Short passwords are easier to brute-force because they collapse the search space.';
+      if (!result.checks.special) return 'A password without symbols is less diverse and more vulnerable to common cracking heuristics.';
+      if (!result.checks.number) return 'Adding a number increases diversity and makes predictable patterns less likely.';
+      if (!result.checks.upper || !result.checks.lower) return 'Mixing upper and lowercase characters broadens the possible combinations.';
+      if (!result.checks.sequence) return 'Avoid obvious sequences or predictable patterns when you practice.';
+      return 'This password is using a broad mix of character types, which raises entropy and improves resilience.';
+    }
+
+    function getPersonalizedHint(result, history) {
+      if (!history || !history.length) {
+        return 'You have no recent history yet. Start with a longer passphrase and keep building from there.';
+      }
+      const shortCount = history.filter(entry => (entry.passwordLength || 0) < 12).length;
+      const shortRatio = shortCount / history.length;
+      if (shortRatio > 0.35) {
+        return 'I noticed you often struggle with length. Try adding an extra word to your password to make it exponentially harder to crack.';
+      }
+      if (!result.checks.sequence) {
+        return 'You are leaning on familiar words. Consider a memorable phrase with a few unexpected symbols.';
+      }
+      if (result.tier === 'weak') {
+        return 'Try adding length first. A few extra characters can change the strength profile dramatically.';
+      }
+      return 'You are making good progress. Keep the pattern varied and make the next attempt slightly longer.';
+    }
+
+    function buildLiveSuggestion(password, result) {
+      const value = String(password || '').trim();
+      const cleaned = value.replace(/[^a-zA-Z0-9]+/g, '').toLowerCase();
+      const seed = cleaned || 'secure';
+      const prefix = seed.charAt(0).toUpperCase() + seed.slice(1, 8);
+      const symbols = ['!', '@', '#', '$', '%', '&'];
+      const symbol = symbols[(prefix.length + (result?.score || 0)) % symbols.length];
+      const words = ['Harbor', 'Crest', 'North', 'Aero', 'Ridge', 'Nova'];
+      const word = words[(seed.length + (result?.score || 0)) % words.length];
+      const num = String(((result?.score || 0) % 900) + 100);
+      const tail = ['Flux', 'Pulse', 'Arc', 'Lumen'][(seed.length + 3) % 4];
+      const suggestion = `${prefix}${symbol}${word}${num}${tail}${symbol}`;
+      return suggestion.length >= 16 ? suggestion : `${suggestion}A7!`;
+    }
+
+    function renderCoachingPanel(result) {
+      if (!coachingSuggestionOutput || !coachingDiagnostic || !coachingLiftValue) return;
+
+      if (!sandboxInput.value.trim()) {
+        coachingSuggestionOutput.textContent = 'Awaiting input to begin hardening...';
+        coachingDiagnostic.textContent = 'Awaiting input to begin hardening...';
+        coachingDiagnostic.className = 'coaching-diagnostic';
+        coachingLiftValue.textContent = '+0 pts';
+        sandboxGaugeCopy.textContent = 'Your current practice score will appear here.';
+        sandboxHistoryCopy.textContent = 'Historical average strength will be compared here.';
+        return;
+      }
+
+      const suggestion = buildLiveSuggestion(sandboxInput.value, result);
+      coachingSuggestionOutput.textContent = suggestion;
+
+      const warning = result?.warnings?.[0] || 'The attempt still leans on predictable structure.';
+      coachingDiagnostic.textContent = warning;
+      coachingDiagnostic.className = `coaching-diagnostic ${result?.tier === 'weak' ? 'weak' : result?.tier === 'fair' ? 'fair' : result?.tier === 'good' ? 'good' : 'strong'}`;
+
+      const lift = Math.max(16, Math.min(60, Math.max(0, 100 - (result?.score || 0)) + 12));
+      coachingLiftValue.textContent = `+${lift} pts`;
+
+      const target = Math.min(100, (result?.score || 0) + lift);
+      sandboxGaugeCopy.textContent = `Current practice strength is ${result?.score || 0}/100. The suggested variant could lift this to ${target}/100.`;
+
+      const historyAverage = subs.length
+        ? Math.round(subs.reduce((sum, entry) => sum + (entry.score || 0), 0) / subs.length)
+        : 0;
+      const historyLabel = historyAverage >= 80 ? 'strong' : historyAverage >= 60 ? 'good' : historyAverage >= 40 ? 'fair' : 'weak';
+      sandboxHistoryCopy.textContent = subs.length
+        ? `Your recent baseline is ${historyAverage}/100, so this attempt sits ${result?.score >= historyAverage ? 'above' : 'below'} the personal average.`
+        : 'Historical average strength will be compared here.';
+      sandboxHistoryFill.className = `sandbox-gauge-fill ${historyLabel}`;
+      sandboxHistoryFill.style.width = `${historyAverage}%`;
+    }
+
+    // ===========================================================
+    // SANDBOX PATTERN SCANNER (mirrors registration.html §3)
+    //   Returns warnings + penalties for the secondary alert
+    //   panel.  Same regex set used by the registration audit so
+    //   both surfaces stay in lock-step.
+    // ===========================================================
+    const SBX_PATTERNS = {
+      sequence: (pw) => {
+        const seqs = [
+          'abcdefghijklmnopqrstuvwxyz',
+          '0123456789',
+          'qwertyuiop',
+          'asdfghjkl',
+          'zxcvbnm'
+        ];
+        const lower = pw.toLowerCase();
+        for (const seq of seqs) {
+          for (let i = 0; i + 4 <= seq.length; i++) {
+            const sub = seq.substring(i, i + 4);
+            if (lower.includes(sub) || lower.includes(sub.split('').reverse().join(''))) {
+              return true;
+            }
+          }
+        }
+        return false;
+      },
+      keyboard: (pw) => {
+        const rows = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm', '1234567890'];
+        const lower = pw.toLowerCase();
+        return rows.some(r =>
+          lower.includes(r.substring(0, 4)) ||
+          lower.includes(r.substring(0, 5)) ||
+          lower.includes(r.split('').reverse().join('').substring(0, 4))
+        );
+      },
+      repetition: (pw) => /(.)\1{2,}/.test(pw),
+      blockRepeat: (pw) => {
+        for (let i = 0; i + 4 <= pw.length; i++) {
+          const a = pw.substring(i, i + 2);
+          if (pw.substring(i + 2, i + 4) === a) return true;
+        }
+        return false;
+      },
+      leetSubstitution: (pw) => {
+        if (pw.length < 6) return false;
+        const lower = pw.toLowerCase();
+        const vowelish = (lower.match(/[aeiou]/g) || []).length;
+        const leetish  = (lower.match(/[@!30$]/g) || []).length;
+        return leetish >= 3 && leetish > vowelish;
+      },
+      yearPattern: (pw) => /\b(19[0-9]{2}|20[0-9]{2})\b/.test(pw)
+    };
+
+    function scanSandboxPatterns(pw) {
+      const warnings = [];
+      if (!pw) return warnings;
+      // Single source of truth for the warning glyph.  Every
+      // warning emitted below is prefixed with this icon so the
+      // pipeline renders exactly one icon per row.  The CSS
+      // pseudo-element that used to duplicate this icon has been
+      // removed to keep the visual single-source.
+      const ICON = '⚠️ ';
+      if (SBX_PATTERNS.sequence(pw) || SBX_PATTERNS.keyboard(pw)) {
+        warnings.push(ICON + 'Sequential or keyboard-layout patterns detected (e.g. abc, qwerty).');
+      }
+      if (SBX_PATTERNS.repetition(pw) || SBX_PATTERNS.blockRepeat(pw)) {
+        warnings.push(ICON + 'Repeated characters or blocks detected (e.g. aaa, abab).');
+      }
+      if (SBX_PATTERNS.yearPattern(pw)) {
+        warnings.push(ICON + 'Recognisable year/date pattern detected (e.g. 1990, 2023).');
+      }
+      if (SBX_PATTERNS.leetSubstitution(pw)) {
+        warnings.push(ICON + 'Predictable leet substitutions detected (e.g. @ for a, 1 for i).');
+      }
+      if (SBX_PATTERNS.lazySymbol && SBX_PATTERNS.lazySymbol(pw)) {
+        warnings.push(ICON + 'Special character is only placed at the boundary — integrate symbols randomly.');
+      }
+      return warnings;
+    }
+
+    function renderSandboxSecondaryAlerts(password) {
+      const slot = document.getElementById('sandboxPatternAlerts');
+      if (!slot) return;
+      slot.innerHTML = '';
+      if (!password) {
+        slot.classList.remove('visible');
+        return;
+      }
+      const warnings = scanSandboxPatterns(password);
+      slot.innerHTML = warnings
+        .map(item => `<div class="pattern-alert">${item}</div>`)
+        .join('');
+      slot.classList.toggle('visible', warnings.length > 0);
+    }
+
+    // ===========================================================
+    // PASSWORD SUGGESTION ENGINE (migrated from registration.html)
+    //   • Generates four strong candidate passphrases on every
+    //     keystroke using the typed fragment as a seed.
+    //   • Strips em dashes and semicolons from rendered text so the
+    //     UI never surfaces those punctuation marks.
+    //   • Bound to the master input pipeline via
+    //     renderSandboxSuggestions(value) below.
+    // ===========================================================
+    function sanitizeSuggestionText(value) {
+      return String(value == null ? '' : value)
+        .replace(/[—–]/g, ', ')
+        .replace(/;/g, ', ')
+        .replace(/\s+,/g, ',')
+        .replace(/,\s*,+/g, ', ')
+        .replace(/\.{2,}/g, '.')
+        .replace(/[.;]+$/, '')
+        .trim();
+    }
+
+    function sbxGenerateStrongPassword() {
+      const lower = 'abcdefghijkmnopqrstuvwxyz';
+      const upper = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+      const num   = '23456789';
+      const spec  = '!@#$%^&*?+=';
+      const all   = lower + upper + num + spec;
+      const arr = new Uint32Array(16);
+      if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
+        crypto.getRandomValues(arr);
+      } else {
+        for (let i = 0; i < arr.length; i++) arr[i] = Math.floor(Math.random() * 0xffffffff);
+      }
+      const guaranteed = [
+        lower[arr[0] % lower.length],
+        upper[arr[1] % upper.length],
+        num[arr[2]   % num.length],
+        spec[arr[3]  % spec.length]
+      ];
+      const rest = [];
+      for (let i = 4; i < 16; i++) rest.push(all[arr[i] % all.length]);
+      const combined = guaranteed.concat(rest);
+      for (let i = combined.length - 1; i > 0; i--) {
+        const j = arr[i % arr.length] % (i + 1);
+        [combined[i], combined[j]] = [combined[j], combined[i]];
+      }
+      return combined.join('');
+    }
+
+    function sbxNonSequentialNumber(len) {
+      const digits = '1234567890';
+      const shuffled = digits.split('').sort(() => Math.random() - 0.5).join('');
+      let result = shuffled.slice(0, len);
+      const hasConsecutive = /(012|123|234|345|456|567|678|789|890|098|987|876|765|654|543|432|321|210)/.test(result);
+      if (hasConsecutive && result.length >= 2) {
+        const arr = result.split('');
+        const idx1 = Math.floor(Math.random() * arr.length);
+        const idx2 = (idx1 + 1) % arr.length;
+        [arr[idx1], arr[idx2]] = [arr[idx2], arr[idx1]];
+        result = arr.join('');
+      }
+      return result;
+    }
+
+    function sbxCaseVariations(seed) {
+      const variants = [seed];
+      variants.push(seed.charAt(0).toUpperCase() + seed.slice(1));
+      variants.push(seed.toUpperCase());
+      variants.push(seed.split('').map((c, i) => i % 2 === 0 ? c.toUpperCase() : c.toLowerCase()).join(''));
+      variants.push(seed.split('').map(c => Math.random() > 0.5 ? c.toUpperCase() : c.toLowerCase()).join(''));
+      return variants;
+    }
+
+    function sbxBuildSuggestions(weakBase) {
+      const base = (weakBase || 'password').toLowerCase().replace(/[^a-z0-9]/g, '') || 'secure';
+      const symbols = ['!', '@', '#', '$', '%', '^', '&', '*', '?', '+'];
+      const suggestions = [];
+      const used = new Set();
+      const variants = sbxCaseVariations(base);
+      for (let i = 0; i < variants.length && suggestions.length < 4; i++) {
+        let seed = variants[i];
+        while (seed.length < 8) seed += seed;
+        const sym = symbols[i % symbols.length];
+        const numBlock = sbxNonSequentialNumber(5);
+        let candidate = seed + sym + numBlock;
+        while (candidate.length < 14) candidate += sbxNonSequentialNumber(2);
+        if (!/[A-Z]/.test(candidate)) candidate = candidate.slice(0, -1) + 'A';
+        if (!/[a-z]/.test(candidate)) candidate = candidate.slice(0, -1) + 'a';
+        if (!/[0-9]/.test(candidate)) candidate = candidate.slice(0, -1) + '7';
+        if (!/[^A-Za-z0-9]/.test(candidate)) candidate = candidate.slice(0, -1) + '!';
+        const seqRegex = /(012|123|234|345|456|567|678|789|890|abc|bcd|cde|def|efg|fgh|ghi|hij|ijk|jkl|klm|lmn|mno|nop|opq|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz)/gi;
+        candidate = candidate.replace(seqRegex, (match) => match.split('').sort(() => Math.random() - 0.5).join(''));
+        if (!used.has(candidate)) {
+          used.add(candidate);
+          suggestions.push(candidate);
+        }
+      }
+      while (suggestions.length < 4) {
+        const randPw = sbxGenerateStrongPassword();
+        if (!used.has(randPw)) {
+          used.add(randPw);
+          suggestions.push(randPw);
+        }
+      }
+      return suggestions;
+    }
+
+    function renderSandboxSuggestions(value) {
+      const card = document.querySelector('.command-center-suggestion-engine');
+      if (!sandboxSuggestionWindow || !sandboxSuggestionValue || !sandboxSuggestionList) return;
+      const baseValue = String(value == null ? '' : value).trim();
+      const active = baseValue.length >= 3;
+      if (card) card.classList.toggle('is-active', active);
+      if (!active) {
+        sandboxSuggestionValue.textContent = sanitizeSuggestionText('Awaiting input');
+        sandboxSuggestionList.innerHTML = '';
+        if (card && !card.querySelector('.command-center-suggestion-engine-placeholder')) {
+          const placeholder = document.createElement('div');
+          placeholder.className = 'command-center-suggestion-engine-placeholder';
+          placeholder.textContent = 'Begin typing a passphrase to generate secure alternatives';
+          card.appendChild(placeholder);
+        }
+        return;
+      }
+      const placeholderEl = card && card.querySelector('.command-center-suggestion-engine-placeholder');
+      if (placeholderEl) placeholderEl.remove();
+      const suggestions = sbxBuildSuggestions(baseValue);
+      const preview = suggestions[0] || 'Use a stronger password';
+      sandboxSuggestionValue.textContent = sanitizeSuggestionText(preview);
+      sandboxSuggestionList.innerHTML = '';
+      suggestions.forEach((pw) => {
+        const li = document.createElement('li');
+        const code = document.createElement('span');
+        code.textContent = sanitizeSuggestionText(pw);
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'use-btn';
+        btn.textContent = 'Use this';
+        btn.addEventListener('click', () => {
+          if (sandboxInput) {
+            sandboxInput.value = pw;
+            sandboxInput.focus();
+            sandboxInput.dispatchEvent(new Event('input', { bubbles: true }));
+          }
+        });
+        li.appendChild(code);
+        li.appendChild(btn);
+        sandboxSuggestionList.appendChild(li);
+      });
+    }
+
+    // ===========================================================
+    // COMMAND CENTER TIP
+    //   Drops a single sanitized coaching line directly below the
+    //   password field.  Pulls the most actionable suggestion from
+    //   the live suggestion engine and clears the slot when the
+    //   candidate is already strong enough not to need guidance.
+    // ===========================================================
+    function renderCommandCenterSuggestion(value, result) {
+      const slot = document.getElementById('commandCenterSuggestion');
+      if (!slot) return;
+      const password = String(value == null ? '' : value).trim();
+      if (!password) {
+        slot.innerHTML = '';
+        slot.classList.remove('visible');
+        return;
+      }
+      const tier = result && result.tier;
+      if (tier === 'strong' || tier === 'ultra') {
+        slot.innerHTML = '';
+        slot.classList.remove('visible');
+        return;
+      }
+      const tips = [];
+      const suggestions = sbxBuildSuggestions(password);
+      if (suggestions.length) {
+        tips.push(`Try a hardened variant such as ${sanitizeSuggestionText(suggestions[0])}`);
+      }
+      if (result && Array.isArray(result.warnings) && result.warnings.length) {
+        tips.push(sanitizeSuggestionText(result.warnings[0]));
+      }
+      if (result && result.isCommon) {
+        tips.push('This phrase matches a common leaked pattern. Choose a fresh passphrase');
+      }
+      const cleanTips = tips
+        .map(t => sanitizeSuggestionText(t).replace(/—/g, '').replace(/;/g, ''))
+        .filter(Boolean)
+        .slice(0, 2);
+      if (!cleanTips.length) {
+        slot.innerHTML = '';
+        slot.classList.remove('visible');
+        return;
+      }
+      slot.innerHTML = cleanTips.map(t => `<span class="command-center-suggestion-line">${escapeHtml(t)}</span>`).join('');
+      slot.classList.add('visible');
+    }
+
+    // ===========================================================
+    // TIME-TO-CRACK FORMATTER (mirrors registration.html)
+    //   Sub-year range is humanised (seconds, minutes, hours,
+    //   days, months, years).  Beyond one year the suffix is
+    //   locked to "years" with a scale prefix so magnitudes stay
+    //   comparable (e.g. "698 billion years").
+    // ===========================================================
+    const SBX_SECONDS_PER_YEAR = 31536000;
+
+    function sbxFormatDuration(seconds) {
+      if (seconds === null || seconds === undefined) return '—';
+      if (seconds <= 0)        return '0 seconds';
+      if (!isFinite(seconds))  return '∞ years';
+
+      const units = [
+        { s: 1,                  n: 'second' },
+        { s: 60,                 n: 'minute' },
+        { s: 3600,               n: 'hour'   },
+        { s: 86400,              n: 'day'    },
+        { s: 2592000,            n: 'month'  },
+        { s: SBX_SECONDS_PER_YEAR, n: 'year' }
+      ];
+      if (seconds < SBX_SECONDS_PER_YEAR) {
+        let chosen = units[0];
+        for (const u of units) if (seconds >= u.s) chosen = u;
+        const value = seconds / chosen.s;
+        const formatted = value < 10 ? value.toFixed(2)
+                        : value < 100 ? value.toFixed(1)
+                        : Math.round(value).toLocaleString();
+        const label = Math.abs(value - 1) < 1e-9 ? chosen.n : chosen.n + 's';
+        return `${formatted} ${label}`;
+      }
+      const years = seconds / SBX_SECONDS_PER_YEAR;
+      const scales = [
+        { v: 1e15, label: 'quadrillion' },
+        { v: 1e12, label: 'trillion'    },
+        { v: 1e9,  label: 'billion'     },
+        { v: 1e6,  label: 'million'     },
+        { v: 1e3,  label: 'thousand'    },
+        { v: 0,    label: ''            }
+      ];
+      for (const sc of scales) {
+        if (years >= sc.v) {
+          const v = years / Math.max(sc.v, 1);
+          const formatted = v < 10 ? v.toFixed(2)
+                          : v < 100 ? v.toFixed(1)
+                          : Math.round(v).toLocaleString();
+          return sc.label ? `${formatted} ${sc.label} years` : `${formatted} years`;
+        }
+      }
+      return `${Math.round(years).toLocaleString()} years`;
+    }
+
+    function buildBehavioralReevaluation(password, result) {
+      const value = String(password || '').trim();
+      const history = subs.filter(entry => entry && entry.username === sessionUser);
+      if (!value) {
+        return {
+          summary: 'Historical re-evaluation will appear once you type a candidate password.',
+          average: history.length ? Math.round(history.reduce((sum, entry) => sum + (entry.score || 0), 0) / history.length) : 0,
+          delta: 0,
+          improved: false
+        };
+      }
+      if (!history.length) {
+        return {
+          summary: 'No prior profile history yet, so this live attempt is being compared to the baseline from your first submission.',
+          average: 0,
+          delta: result?.score || 0,
+          improved: Boolean((result?.score || 0) >= 60)
+        };
+      }
+      const average = Math.round(history.reduce((sum, entry) => sum + (entry.score || 0), 0) / history.length);
+      const delta = (result?.score || 0) - average;
+      const improved = delta >= 0;
+      const direction = improved ? 'above' : 'below';
+      const magnitude = Math.abs(delta);
+      return {
+        summary: improved
+          ? `Behavioral delta: this candidate sits ${magnitude} points ${direction} your recent average and shows a stronger adaptive pattern.`
+          : `Behavioral delta: this candidate sits ${magnitude} points ${direction} your recent average, so it still needs more hardening.`,
+        average,
+        delta,
+        improved
+      };
+    }
+
+    function renderSandbox(result = null) {
+      const evaluation = result || evaluateSandbox(sandboxInput.value);
+      const password = sandboxInput.value;
+
+      sandboxStrengthValue.textContent = password ? `${evaluation.label} · ${evaluation.score}` : '—';
+      sandboxStrengthValue.className = `v ${password ? evaluation.tier : ''}`;
+      sandboxStrengthBar.className = `telemetry-track ${password ? evaluation.tier : ''}`;
+      sandboxStrengthBar.firstElementChild.style.width = password ? `${Math.min(100, evaluation.score)}%` : '0%';
+
+      sandboxLengthValue.textContent = String(password.length);
+      sandboxLengthBar.className = `telemetry-track length stage-${password.length >= 21 ? 5 : password.length >= 16 ? 4 : password.length >= 12 ? 3 : password.length >= 8 ? 2 : 1}`;
+      sandboxLengthBar.firstElementChild.style.width = password ? `${Math.min(100, Math.max(12, password.length) * 4)}%` : '0%';
+
+      sandboxEntropyValue.textContent = password ? `${evaluation.entropy.toFixed(2)} bits` : '0.00 bits';
+      sandboxEntropyValue.className = `v ${password ? (evaluation.entropy >= 80 ? 'ultra' : evaluation.entropy >= 60 ? 'strong' : evaluation.entropy >= 40 ? 'good' : 'weak') : ''}`;
+      sandboxEntropyBar.className = `telemetry-track ${password ? (evaluation.entropy >= 80 ? 'ultra' : evaluation.entropy >= 60 ? 'strong' : evaluation.entropy >= 40 ? 'good' : 'weak') : ''}`;
+      sandboxEntropyBar.firstElementChild.style.width = password ? `${Math.min(100, (evaluation.entropy / 128) * 100)}%` : '0%';
+
+      updateCharacterPoolBadges(password);
+
+      const breachState = getSandboxBreachState(password);
+      sandboxBreach.dataset.state = breachState;
+      if (breachState === 'compromised') {
+        const count = sandboxBreachData.password === sandboxInput.value ? sandboxBreachData.count : null;
+        const countText = count && count > 0 ? breachFmt.format(count) : '1';
+        sandboxBreachHeadline.innerHTML =
+          'CRITICAL WARNING: Password exposed ' +
+          '<span class="breach-count">' + countText + '</span>' +
+          ' times in known data breaches';
+        sandboxBreachSub.textContent =
+          'This exact string is public and highly vulnerable. ' +
+          'You must choose a completely different phrase.';
+      } else if (breachState === 'secure') {
+        sandboxBreachHeadline.innerHTML =
+          '<span class="breach-icon-inline" aria-hidden="true">🛡</span> ' +
+          'Unique Password: 0 known data breaches';
+        sandboxBreachSub.textContent =
+          'This exact string has not been seen in any leak indexed by the global breach database.';
+      } else if (breachState === 'pending') {
+        sandboxBreachHeadline.textContent = 'Checking a global breach database for known exposures.';
+        sandboxBreachSub.textContent = 'Please wait while we verify this password against the breach index.';
+      } else {
+        sandboxBreachHeadline.textContent = 'Awaiting password input';
+        sandboxBreachSub.textContent = 'Checking a global breach database for known exposures.';
+      }
+
+      renderSandboxSecondaryAlerts(sandboxInput.value);
+
+      const warnings = password ? (evaluation.warnings && evaluation.warnings.length ? evaluation.warnings : []) : [];
+      sandboxWarnings.classList.toggle('visible', Boolean(warnings.length));
+      sandboxWarningList.innerHTML = warnings.map(item => `<li>${item}</li>`).join('');
+
+      sandboxHelperText.classList.remove('weak', 'fair', 'good', 'strong', 'ultra', 'breach');
+      if (password) {
+        sandboxHelperText.classList.add(evaluation.tier);
+        const behavioral = buildBehavioralReevaluation(password, evaluation);
+        const helperItems = [behavioral.summary, ...(evaluation.suggestions && evaluation.suggestions.length ? evaluation.suggestions : ['Your password structure is improving.'])];
+        sandboxHelperText.innerHTML = `<ul>${helperItems.slice(0, 4).map(item => `<li>${item}</li>`).join('')}</ul>`;
+      } else {
+        sandboxHelperText.textContent = 'Start typing to see feedback.';
+      }
+
+      const fmtTime = (value) => password ? sbxFormatDuration(value) : '—';
+      const hardware = [
+        { hw: 'desktop', bfFill: 'sandboxBfDesktopFill', bfTime: 'sandboxBfDesktopTime', oaFill: 'sandboxOaDesktopFill', oaTime: 'sandboxOaDesktopTime' },
+        { hw: 'gpu',     bfFill: 'sandboxBfGpuFill',     bfTime: 'sandboxBfGpuTime',     oaFill: 'sandboxOaGpuFill',     oaTime: 'sandboxOaGpuTime'     },
+        { hw: 'farm',    bfFill: 'sandboxBfFarmFill',    bfTime: 'sandboxBfFarmTime',    oaFill: 'sandboxOaFarmFill',    oaTime: 'sandboxOaFarmTime'    }
+      ];
+      hardware.forEach(({ hw, bfFill, bfTime, oaFill, oaTime }) => {
+        const bf = tlmCrackTime(password, hw, false);
+        const oa = tlmCrackTime(password, hw, true);
+        document.getElementById(bfFill).style.width = `${Math.min(100, Math.max(8, bf.fraction * 100))}%`;
+        document.getElementById(bfTime).textContent = fmtTime(bf.seconds);
+        document.getElementById(oaFill).style.width = `${Math.min(100, Math.max(8, oa.fraction * 100))}%`;
+        document.getElementById(oaTime).textContent = fmtTime(oa.seconds);
+      });
+
+      const historyAverage = subs.length
+        ? Math.round(subs.reduce((sum, entry) => sum + (entry.score || 0), 0) / subs.length)
+        : 0;
+      if (sandboxGaugeFill) {
+        sandboxGaugeFill.style.width = `${evaluation.score}%`;
+        sandboxGaugeFill.className = `sandbox-gauge-fill ${evaluation.tier}`;
+      }
+      if (sandboxGaugeCopy) {
+        sandboxGaugeCopy.textContent = evaluation.score >= 80
+          ? 'This practice password is now in the strong range.'
+          : `Current practice strength is ${evaluation.score}/100.`;
+      }
+      if (sandboxHistoryFill) {
+        sandboxHistoryFill.style.width = `${historyAverage}%`;
+        sandboxHistoryFill.className = `sandbox-gauge-fill ${historyAverage >= 80 ? 'strong' : historyAverage >= 60 ? 'good' : historyAverage >= 40 ? 'fair' : 'weak'}`;
+      }
+      if (sandboxHistoryCopy) {
+        sandboxHistoryCopy.textContent = subs.length
+          ? `Historical average: ${historyAverage}/100 across ${subs.length} ${subs.length === 1 ? 'entry' : 'entries'}.`
+          : 'Historical average will appear once you have a few entries to compare.';
+      }
+
+      sandboxChecklist.querySelectorAll('[data-rule]').forEach(item => {
+        const rule = item.dataset.rule;
+        const met = !!evaluation.checks[rule];
+        item.classList.toggle('met', met);
+        item.classList.toggle('failed', !met && password.length > 0);
+        item.classList.toggle('pending', !password);
+      });
+
+      if (sandboxHelperText) {
+        sandboxHelperText.classList.remove('weak', 'fair', 'good', 'strong', 'ultra', 'breach');
+        if (sandboxInput.value) {
+          if (breachState === 'compromised') {
+            sandboxHelperText.classList.add('breach');
+          } else {
+            sandboxHelperText.classList.add(evaluation.tier);
+          }
+          const helperItems = (evaluation.suggestions && evaluation.suggestions.length ? evaluation.suggestions : ['Your password structure is improving.']);
+          sandboxHelperText.innerHTML = `<ul>${helperItems.map(item => `<li>${item}</li>`).join('')}</ul>`;
+        } else {
+          sandboxHelperText.textContent = 'Start typing to see feedback.';
+        }
+      }
+
+      if (sandboxScoreDial) {
+        const dialTier = password ? (evaluation.tier === 'ultra' ? 'ultra' : evaluation.tier) : 'weak';
+        sandboxScoreDial.dataset.tier = dialTier;
+        sandboxScoreDial.style.setProperty('--pct', String(Math.max(0, Math.min(100, evaluation.score))));
+        if (sandboxScoreDialValue) sandboxScoreDialValue.textContent = password ? String(evaluation.score) : '0';
+        if (sandboxScoreDialTier) sandboxScoreDialTier.textContent = password ? (evaluation.tier === 'ultra' ? 'Ultra strong' : evaluation.tier.charAt(0).toUpperCase() + evaluation.tier.slice(1)) : 'Awaiting input';
+        if (sandboxScoreDialSub) sandboxScoreDialSub.textContent = password ? (evaluation.tier === 'strong' || evaluation.tier === 'ultra' ? 'Resilience is now in the secure band.' : 'Add more length and variety to push the score higher.') : 'Start typing to compute resilience.';
+      }
+
+      if (sandboxPatternList) {
+        const patternScan = password ? scanPatterns(password) : { penalties: [], warnings: [] };
+        const patternMatches = {
+          keyboard: password ? patternScan.penalties.some(item => item.key === 'keyboard') : false,
+          dictionary: password ? (evaluation.isCommon || /password|welcome|qwerty|admin|login|secret/i.test(password)) : false,
+          repetition: password ? patternScan.penalties.some(item => item.key === 'repetition') : false,
+          substitution: password ? patternScan.penalties.some(item => item.key === 'leet' || item.key === 'lazySymbol') : false
+        };
+
+        sandboxPatternList.querySelectorAll('li').forEach((li) => {
+          const key = li.dataset.key;
+          const matched = patternMatches[key];
+          const state = !password ? 'idle' : matched ? 'alert' : 'ok';
+          li.dataset.state = state;
+          const value = li.querySelector('.rgt-pattern-value');
+          if (value) {
+            value.textContent = !password ? 'Awaiting input' : matched ? 'risk' : 'not detected';
+          }
+        });
+      }
+
+      const rgtAdvisory = document.getElementById('rgtAdvisory');
+      if (rgtAdvisory) {
+        const resilienceState = sandboxInput.value
+          ? (evaluation.score >= 80 ? 'green' : evaluation.score >= 50 ? 'amber' : 'red')
+          : 'red';
+        rgtAdvisory.dataset.resilience = resilienceState;
+      }
+      if (sandboxHelperText) {
+        sandboxHelperText.dataset.tier = sandboxInput.value
+          ? (breachState === 'compromised' ? 'breach' : evaluation.tier)
+          : 'idle';
+      }
+
+      if (sandboxRationaleText) {
+        const behavioral = buildBehavioralReevaluation(password, evaluation);
+        sandboxRationaleText.textContent = password
+          ? behavioral.summary
+          : 'Length and unpredictability multiply the cost of attack. A long passphrase built from unrelated words is far harder to guess than a short, predictable substitution.';
+      }
+
+      sandboxCommitBtn.disabled = !password;
+      sandboxCommitBtn.classList.toggle('ready', evaluation.tier === 'good' || evaluation.tier === 'strong');
+
+      if (evaluation.tier === 'strong' && password && sandboxShell) {
+        sandboxShell.classList.remove('celebrate');
+        void sandboxShell.offsetWidth;
+        sandboxShell.classList.add('celebrate');
+        window.clearTimeout(window.__sandboxCelebrateTimer);
+        window.__sandboxCelebrateTimer = window.setTimeout(() => sandboxShell.classList.remove('celebrate'), 1200);
+      }
+
+      renderCoachingPanel(evaluation);
+    }
+
+    function renderProfileSummary() {
+      const identityId = document.getElementById('userIdentityId');
+      const identityLast = document.getElementById('userIdentityLast');
+      const identityResilience = document.getElementById('userIdentityResilience');
+      const currentStatusEl = document.getElementById('userCurrentStatus');
+      const progressBarEl = document.getElementById('userProgressBar');
+      const progressLabelEl = document.getElementById('userProgressLabel');
+      const trendChartEl = document.getElementById('userTrendChart');
+      const trendCaptionEl = document.getElementById('userTrendCaption');
+
+      if (identityId) identityId.textContent = sessionUser;
+      if (identityLast) identityLast.textContent = subs.length ? formatDate(subs[subs.length - 1].timestamp) : 'No activity yet';
+
+      const improved = resilience.filter(r => r.outcome === 'improved');
+      let resilienceScore = '—';
+      if (improved.length) {
+        const deltas = improved.map(r => (r.adaptation && r.adaptation.tierDelta) || 0);
+        const avg = deltas.reduce((a, b) => a + b, 0) / deltas.length;
+        resilienceScore = `${avg >= 0 ? '+' : ''}${avg.toFixed(2)}`;
+      }
+      if (identityResilience) identityResilience.textContent = resilienceScore;
+
+      const latestSubmission = subs.slice().sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))[0];
+      const latestTier = latestSubmission ? latestSubmission.tier : null;
+      if (currentStatusEl) {
+        const tierLabel = latestTier ? cap(latestTier) : 'No data';
+        currentStatusEl.textContent = `Currently: ${tierLabel}`;
+        currentStatusEl.className = `status-pill ${latestTier ? 'status-' + latestTier : 'status-weak'}`;
+      }
+
+      const goodStrongCount = subs.filter(s => s.tier === 'good' || s.tier === 'strong').length;
+      const progressPct = subs.length ? Math.round((goodStrongCount / subs.length) * 100) : 0;
+      if (progressBarEl) {
+        progressBarEl.style.width = `${progressPct}%`;
+      }
+      if (progressLabelEl) {
+        progressLabelEl.textContent = `${progressPct}% of sessions reached Good or Strong`;
+      }
+
+      if (trendChartEl) {
+        const points = subs.slice().reverse().slice(0, 8).map((s, index, arr) => {
+          const value = tierOrder[s.tier] ?? 0;
+          const x = arr.length > 1 ? 12 + (index / (arr.length - 1)) * 196 : 104;
+          const y = 78 - (value / 3) * 56;
+          return `${x},${y}`;
+        });
+
+        const path = points.length > 1
+          ? `<polyline fill="none" stroke="url(#trendGradient)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="${points.join(' ')}" />`
+          : '<circle cx="104" cy="39" r="5" fill="#8be9fd" />';
+        trendChartEl.innerHTML = `
+          <defs>
+            <linearGradient id="trendGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#50fa7b" />
+              <stop offset="100%" stop-color="#8be9fd" />
+            </linearGradient>
+          </defs>
+          <line x1="12" y1="78" x2="208" y2="78" stroke="rgba(255,255,255,0.16)" stroke-width="1" />
+          <line x1="12" y1="22" x2="208" y2="22" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+          ${path}
+        `;
+        if (points.length > 1 && trendCaptionEl) {
+          trendCaptionEl.textContent = `${points.length} recent attempts tracked`;
+        }
+      }
+    }
+
+    function renderStats() {
+      document.getElementById('userStatTotal').textContent = subs.length;
+
+      let best = null;
+      subs.forEach(s => {
+        if (!best || (tierOrder[s.tier] ?? 0) > (tierOrder[best.tier] ?? 0)) {
+          best = s;
+        }
+      });
+      document.getElementById('userStatBest').textContent = best
+        ? best.tier.charAt(0).toUpperCase() + best.tier.slice(1)
+        : '—';
+
+      document.getElementById('userStatInterv').textContent = intervs.length;
+      const improved = resilience.filter(r => r.outcome === 'improved');
+      if (improved.length) {
+        const deltas = improved.map(r => (r.adaptation && r.adaptation.tierDelta) || 0);
+        const avg = deltas.reduce((a, b) => a + b, 0) / deltas.length;
+        document.getElementById('userStatDelta').textContent = (avg >= 0 ? '+' : '') + avg.toFixed(2);
+      } else {
+        document.getElementById('userStatDelta').textContent = '—';
+      }
+    }
+
+    function renderBehavioralFlow() {
+      const flowEl = document.getElementById('userResilienceTimeline');
+      const flowEmpty = document.getElementById('userResilienceEmpty');
+      document.getElementById('userResilienceCount').textContent = resilience.length;
+
+      if (!resilience.length) {
+        flowEmpty.hidden = false;
+        flowEl.innerHTML = '';
+        return;
+      }
+
       flowEmpty.hidden = true;
       flowEl.innerHTML = resilience.slice().reverse().map((r, i) => {
-        const adapted  = r.outcome === 'improved';
-        const hesSec   = ((r.hesitation && r.hesitation.ms || 0) / 1000).toFixed(1);
-        const hesKeys  = (r.hesitation && r.hesitation.keypresses) || 0;
+        const adapted = r.outcome === 'improved';
+        const hesSec = ((r.hesitation && r.hesitation.ms || 0) / 1000).toFixed(1);
+        const hesKeys = (r.hesitation && r.hesitation.keypresses) || 0;
         const hesBacks = (r.hesitation && r.hesitation.backspaces) || 0;
-        const tier     = (t) => `<span class="tier-pill ${t}">${t}</span>`;
-        const deltaTxt = ((r.adaptation.tierDelta || 0) >= 0 ? '+' : '')
-                          + (r.adaptation.tierDelta || 0);
-        const delay    = i < 10 ? (i * 70) : 0;
+        const outcomeLabel = adapted ? 'Adapted' : 'Accepted risk';
         return `
-          <li class="flow-row ${adapted ? 'adapted' : 'declined'}" ${delay ? `style="animation-delay:${delay}ms"` : ''}>
-            <div class="flow-meta">
-              <span class="flow-time">${formatDate(r.timestamp)}</span>
-              <span class="flow-outcome ${r.outcome}">
-                ${adapted ? '✓ Adapted' : '⚠ Accepted risk'}
-              </span>
+          <article class="mobile-card user-history-card">
+            <div class="history-card-main">
+              <div class="history-time">${formatDate(r.timestamp)}</div>
+              <div class="history-title">${escapeHtml(outcomeLabel)} · ${escapeHtml((r.baseline && r.baseline.tier) || 'weak')} → ${escapeHtml((r.adaptation && r.adaptation.tier) || 'weak')}</div>
+              <div class="history-copy">${escapeHtml(r.catalyst && r.catalyst.summary ? r.catalyst.summary : 'Intervention captured for this session.')}</div>
             </div>
-            <div class="flow-arc">
-              <div class="flow-stage baseline">
-                <div class="stage-label">Attempt 1 · Baseline</div>
-                <div class="stage-tier">${tier(r.baseline.tier)}</div>
-                <div class="stage-pw pw-mono">${escapeHtml(r.baseline.password || '')}</div>
-                <div class="stage-meta">${r.baseline.passwordLength} chars</div>
-              </div>
-              <div class="flow-arrow">
-                <div class="arrow-line"></div>
-                <div class="arrow-icon">⚡</div>
-              </div>
-              <div class="flow-stage catalyst">
-                <div class="stage-label">Intervention triggered</div>
-                <div class="stage-meta catalyst-summary">${escapeHtml(r.catalyst.summary)}</div>
-                <div class="stage-meta">
-                  <span class="hesitation-pill">⏱ ${hesSec}s</span>
-                  <span class="hesitation-pill">⌨ ${hesKeys} keys</span>
-                  <span class="hesitation-pill">⌫ ${hesBacks} corrections</span>
-                </div>
-              </div>
-              <div class="flow-arrow">
-                <div class="arrow-line"></div>
-                <div class="arrow-icon">→</div>
-              </div>
-              <div class="flow-stage adapted">
-                <div class="stage-label">Attempt 2 · Adaptation</div>
-                <div class="stage-tier">${tier(r.adaptation.tier)}</div>
-                <div class="stage-pw pw-mono">${escapeHtml(r.adaptation.password || '')}</div>
-                <div class="stage-meta">
-                  ${r.adaptation.passwordLength} chars
-                  <span class="delta-tag ${(r.adaptation.tierDelta || 0) > 0 ? 'positive' : (r.adaptation.tierDelta || 0) < 0 ? 'negative' : 'neutral'}">Δ ${deltaTxt}</span>
-                </div>
-              </div>
+            <div class="history-card-actions">
+              <span class="status-badge ${adapted ? 'status-strong' : 'status-weak'}">${adapted ? 'Strong' : 'Risk'}</span>
+              <button class="mobile-card-btn" type="button" data-kind="resilience" data-index="${i}" onclick="showUserDetail(this)">View Details</button>
             </div>
-          </li>
+          </article>
         `;
       }).join('');
     }
 
+    function commitSandboxToProfile(options) {
+      const password = String((options && options.password) || sandboxInput.value || '').trim();
+      if (!password) return;
+      const result = evaluateSandbox(password);
+      const now = new Date().toISOString();
+      // --- Phase 1 (pending): lock the input, switch the button into a progress state,
+      //     broadcast a status message in the helper text, and let the listener restore it later.
+      setSandboxCommitState('pending', 'Locking attempt in…');
+
+      const submissionEntry = {
+        username: sessionUser,
+        password,
+        passwordLength: password.length,
+        tier: result.tier,
+        score: result.score,
+        entropy: result.entropy,
+        suggestions: result.suggestions,
+        warnings: result.warnings,
+        passed: result.passed,
+        elapsedMs: 0,
+        backspaceCount: 0,
+        timestamp: now
+      };
+      const existingSubmissions = (loadJSON(SUBMISSIONS_KEY) || []).filter(item => item.username !== sessionUser);
+      const nextSubmissions = [...existingSubmissions, submissionEntry];
+      localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify(nextSubmissions));
+      subs = nextSubmissions.filter(item => item.username === sessionUser);
+
+      const resilienceEntry = {
+        username: sessionUser,
+        outcome: result.tier === 'strong' || result.tier === 'good' || result.score >= 60 ? 'improved' : 'accepted',
+        baseline: {
+          password,
+          passwordLength: password.length,
+          tier: result.tier,
+          score: result.score,
+          suggestions: result.suggestions,
+          warnings: result.warnings,
+          entropy: result.entropy
+        },
+        adaptation: {
+          password,
+          passwordLength: password.length,
+          tier: result.tier,
+          score: result.score,
+          suggestions: result.suggestions,
+          warnings: result.warnings,
+          entropy: result.entropy,
+          tierDelta: 0,
+          changed: false
+        },
+        catalyst: {
+          summary: 'Sandbox practice committed to profile.',
+          failedRules: [],
+          missing: []
+        },
+        hesitation: {
+          ms: 0,
+          keypresses: 0,
+          backspaces: 0
+        },
+        timestamp: now
+      };
+      const existingResilience = (loadJSON(RESILIENCE_KEY) || []).filter(item => item.username !== sessionUser);
+      const nextResilience = [...existingResilience, resilienceEntry];
+      localStorage.setItem(RESILIENCE_KEY, JSON.stringify(nextResilience));
+      resilience = nextResilience.filter(item => item.username === sessionUser);
+
+      if (!options || !options.keepValue) {
+        sandboxInput.value = '';
+      }
+      renderSandbox();
+      renderProfileSummary();
+      renderStats();
+      renderBehavioralFlow();
+      renderUserLog();
+      // --- Phase 2 (success): button flashes a confirmed state, helper text mirrors it,
+      //     and a short delay returns the button to its idle copy for the next attempt.
+      setSandboxCommitState('success', 'Attempt committed to your telemetry log.');
+      window.setTimeout(() => {
+        setSandboxCommitState('idle', 'Start typing to see feedback.');
+      }, 1400);
+    }
+
+    function setSandboxCommitState(state, helperMessage) {
+      // Pending → success → idle flow keeps the audit in sync with the user-visible button.
+      if (!sandboxCommitBtn) return;
+      sandboxCommitBtn.dataset.state = state;
+      sandboxCommitBtn.disabled = state === 'pending';
+      const labelMap = { pending: 'Committing…', success: 'Committed', idle: 'Commit to profile' };
+      sandboxCommitBtn.textContent = labelMap[state] || 'Commit to profile';
+      if (helperMessage && sandboxHelperText) {
+        sandboxHelperText.textContent = helperMessage;
+        sandboxHelperText.classList.remove('weak', 'fair', 'good', 'strong', 'ultra', 'breach');
+      }
+    }
+
+    // ----- Identity + summary strip -----------------------------
+    renderProfileSummary();
+
+    // ----- Sandbox wiring ---------------------------------------
+    function evaluatePassword(password) {
+      const value = String(password ?? sandboxInput.value ?? '').trim();
+      const secondaryAlerts = document.getElementById('sandboxPatternAlerts');
+      if (secondaryAlerts) secondaryAlerts.innerHTML = '';
+      const result = evaluateSandbox(value);
+      renderSandbox(result);
+      renderSandboxSuggestions(value);
+      renderCommandCenterSuggestion(value, result);
+      scheduleSandboxBreachLookup(value);
+      return result;
+    }
+
+    sandboxInput.addEventListener('input', (event) => {
+      const secondaryAlerts = document.getElementById('sandboxPatternAlerts');
+      if (secondaryAlerts) secondaryAlerts.innerHTML = '';
+      evaluatePassword(event.target.value);
+    });
+    sandboxTooltipTrigger.addEventListener('click', () => {
+      sandboxTooltip.classList.toggle('visible');
+    });
+    sandboxChallengeBtn.addEventListener('click', () => {
+      const challenges = [
+        'Create a password that is strong but memorable, using at least two non-adjacent symbols.',
+        'Make a resilient password that feels natural to you while avoiding obvious words.',
+        'Build a strong passphrase that includes both length and a rare symbol placement.'
+      ];
+      sandboxChallengeText.textContent = challenges[Math.floor(Math.random() * challenges.length)];
+    });
+    if (coachingApplyBtn) {
+      coachingApplyBtn.addEventListener('click', () => {
+        const suggestion = coachingSuggestionOutput && coachingSuggestionOutput.textContent && coachingSuggestionOutput.textContent !== 'Awaiting input to begin hardening...'
+          ? coachingSuggestionOutput.textContent.trim()
+          : buildLiveSuggestion(sandboxInput.value, evaluateSandbox(sandboxInput.value));
+        sandboxInput.value = suggestion;
+        sandboxInput.focus();
+        renderSandbox();
+      });
+    }
+    sandboxCommitBtn.addEventListener('click', () => commitSandboxToProfile());
+
+    renderSandbox();
+
+    // ----- KPI cards ---------------------------------------------
+    renderStats();
+
+    // ----- Behavioral flow ---------------------------------------
+    renderBehavioralFlow();
+
     // ----- Submission log (filtered) -----------------------------
     let activeFilter = 'all';
-    const bodyEl  = document.getElementById('userLogsBody');
+    const logListEl = document.getElementById('userLogList');
     const emptyEl = document.getElementById('userEmptyState');
     const countEl = document.getElementById('userLogsCount');
 
@@ -302,24 +1855,24 @@
         .reverse();
       countEl.textContent = rows.length + ' ' + (rows.length === 1 ? 'entry' : 'entries');
       if (!rows.length) {
-        bodyEl.innerHTML = '';
+        logListEl.innerHTML = '';
         emptyEl.hidden = false;
         return;
       }
       emptyEl.hidden = true;
-      const STAGGER = 30;
-      bodyEl.innerHTML = rows.map((s, i) => {
-        const delay = i < STAGGER ? (i * 50) : 0;
-        return `
-          <tr ${delay ? `style="animation-delay:${delay}ms"` : ''}>
-            <td>${formatDate(s.timestamp)}</td>
-            <td><span class="tier-pill ${s.tier}">${s.tier}</span></td>
-            <td>${s.score != null ? (s.score + 1) + '/5' : '—'}</td>
-            <td>${s.passwordLength}</td>
-            <td><span class="pw-mono pw-cell">${escapeHtml(s.password || '')}</span></td>
-          </tr>
-        `;
-      }).join('');
+      logListEl.innerHTML = rows.map((s, i) => `
+        <article class="mobile-card user-log-card">
+          <div class="user-log-card-main">
+            <div class="log-time">${formatDate(s.timestamp)}</div>
+            <div class="log-title">${escapeHtml(s.username || sessionUser)}</div>
+            <div class="log-copy">Score ${s.score != null ? s.score + '/100' : '—'} · ${s.passwordLength} chars</div>
+          </div>
+          <div class="log-card-actions">
+            <span class="status-badge status-${s.tier || 'weak'}">${escapeHtml(s.tier || 'weak')}</span>
+            <button class="mobile-card-btn" type="button" data-kind="submission" data-index="${i}" onclick="showUserDetail(this)">View Details</button>
+          </div>
+        </article>
+      `).join('');
     }
     renderUserLog();
 
@@ -332,10 +1885,122 @@
       });
     });
 
+    // ----- Detail modal ------------------------------------------
+    function showUserDetail(btn) {
+      const modal = document.getElementById('detailsModal');
+      const modalBody = document.getElementById('modalBody');
+      if (!modal || !modalBody || !btn) return;
+
+      const kind = btn.getAttribute('data-kind');
+      const index = Number(btn.getAttribute('data-index') || 0);
+
+      if (kind === 'resilience') {
+        const session = resilience.slice().reverse()[index];
+        if (!session) return;
+        const adapted = session.outcome === 'improved';
+        const hesSec = ((session.hesitation && session.hesitation.ms || 0) / 1000).toFixed(1);
+        const hesKeys = (session.hesitation && session.hesitation.keypresses) || 0;
+        const hesBacks = (session.hesitation && session.hesitation.backspaces) || 0;
+        const deltaTxt = ((session.adaptation.tierDelta || 0) >= 0 ? '+' : '') + (session.adaptation.tierDelta || 0);
+        modalBody.innerHTML = `
+          <div class="modal-body-content">
+            <h3 style="margin-bottom:12px;">Session details</h3>
+            <div class="detail-stack" style="display:grid; gap:10px;">
+              <div class="data-group">
+                <div class="label">Time</div>
+                <div class="value">${escapeHtml(formatDate(session.timestamp))}</div>
+              </div>
+              <div class="data-group">
+                <div class="label">Outcome</div>
+                <div class="value"><span class="status-badge ${adapted ? 'status-strong' : 'status-weak'}">${adapted ? 'Adapted' : 'Risk accepted'}</span></div>
+              </div>
+              <div class="data-group">
+                <div class="label">Baseline password</div>
+                <div class="value password-box">${escapeHtml(session.baseline && session.baseline.password ? session.baseline.password : '')}</div>
+              </div>
+              <div class="data-group">
+                <div class="label">Intervention summary</div>
+                <div class="value">${escapeHtml(session.catalyst && session.catalyst.summary ? session.catalyst.summary : 'No summary recorded')}</div>
+              </div>
+              <div class="data-group">
+                <div class="label">Hesitation</div>
+                <div class="value">${hesSec}s · ${hesKeys} keys · ${hesBacks} corrections</div>
+              </div>
+              <div class="data-group">
+                <div class="label">Adapted password</div>
+                <div class="value password-box">${escapeHtml(session.adaptation && session.adaptation.password ? session.adaptation.password : '')}</div>
+              </div>
+              <div class="data-group">
+                <div class="label">Tier shift</div>
+                <div class="value">${escapeHtml(deltaTxt)}</div>
+              </div>
+            </div>
+          </div>
+        `;
+      } else {
+        const submission = rowsForModal(index);
+        if (!submission) return;
+        modalBody.innerHTML = `
+          <div class="modal-body-content">
+            <h3 style="margin-bottom:12px;">Submission details</h3>
+            <div class="detail-stack" style="display:grid; gap:10px;">
+              <div class="data-group">
+                <div class="label">Time</div>
+                <div class="value">${escapeHtml(formatDate(submission.timestamp))}</div>
+              </div>
+              <div class="data-group">
+                <div class="label">Tier</div>
+                <div class="value"><span class="status-badge status-${submission.tier || 'weak'}">${escapeHtml(submission.tier || 'weak')}</span></div>
+              </div>
+              <div class="data-group">
+                <div class="label">Password</div>
+                <div class="value password-box">${escapeHtml(submission.password || '')}</div>
+              </div>
+              <div class="data-group">
+                <div class="label">Score</div>
+                <div class="value">${escapeHtml(submission.score != null ? submission.score + '/100' : '—')}</div>
+              </div>
+              <div class="data-group">
+                <div class="label">Length</div>
+                <div class="value">${escapeHtml(submission.passwordLength)}</div>
+              </div>
+              <div class="data-group">
+                <div class="label">Time on password</div>
+                <div class="value">${escapeHtml(((submission.elapsedMs || 0) / 1000).toFixed(1) + 's')}</div>
+              </div>
+              <div class="data-group">
+                <div class="label">Backspaces</div>
+                <div class="value">${escapeHtml(submission.backspaceCount || 0)}</div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+      modal.style.display = 'block';
+    }
+    window.showUserDetail = showUserDetail;
+
+    function rowsForModal(index) {
+      return subs
+        .filter(s => activeFilter === 'all' || s.tier === activeFilter)
+        .slice()
+        .reverse()[index];
+    }
+
     // ----- Sign out ----------------------------------------------
     document.getElementById('signOutBtn').addEventListener('click', () => {
       sessionStorage.removeItem(SESSION_KEY);
       window.location.href = 'sign.html';
+    });
+
+    document.addEventListener('click', (event) => {
+      if (event.target.matches('.close-btn')) {
+        const modal = document.getElementById('detailsModal');
+        if (modal) modal.style.display = 'none';
+      }
+      if (event.target.id === 'detailsModal') {
+        event.target.style.display = 'none';
+      }
     });
 
     // ----- Helpers -----------------------------------------------

@@ -68,8 +68,8 @@
     <!-- §2 — Macro telemetry cards (KPIs) -->
     <section class="records-macro" aria-label="Macro telemetry">
       <div class="macro-card">
-        <div class="macro-value" id="kpiDatasets">12</div>
-        <div class="macro-label">Datasets processed</div>
+        <div class="macro-value" id="kpiDatasets">0</div>
+        <div class="macro-label">Total submissions</div>
       </div>
       <div class="macro-card">
         <div class="macro-value" id="kpiAccounts">4,217</div>
@@ -112,11 +112,11 @@
             <span class="records-action-v">k-anonymity range lookup · v3 reference</span>
           </span>
         </a>
-        <a class="records-action" href="https://owasp.org/www-project-cheat-sheets/" target="_blank" rel="noopener">
+        <a class="records-action" href="Q&amp;A.html">
           <span class="records-action-icon" aria-hidden="true">⌘</span>
           <span class="records-action-text">
-            <span class="records-action-k">OWASP Password Storage Cheat Sheet</span>
-            <span class="records-action-v">Authoritative guidance for password resilience</span>
+            <span class="records-action-k">Password Behavior Questionnaire</span>
+            <span class="records-action-v">Evaluate student habits and cognitive friction during password creation.</span>
           </span>
         </a>
       </div>
@@ -147,9 +147,6 @@
               Collection Date
               <span class="sort-arrow" aria-hidden="true">↕</span>
             </th>
-            <th scope="col" class="col-action-label">
-              <span class="sr-only">Action</span>
-            </th>
           </tr>
         </thead>
         <tbody id="recordsBody">
@@ -160,84 +157,72 @@
             <td class="col-count">2,847,221</td>
             <td class="col-date">2024-08-12</td>
             <td class="col-date">2009-12-04</td>
-            <td><a class="row-arrow" href="portal.html" aria-label="Open RockYou-2024 details">→</a></td>
           </tr>
           <tr>
             <td class="col-name">LinkedIn Credential Dump (Hashed)</td>
             <td class="col-count">1,205,498</td>
             <td class="col-date">2024-09-03</td>
             <td class="col-date">2012-06-15</td>
-            <td><a class="row-arrow" href="portal.html" aria-label="Open LinkedIn details">→</a></td>
           </tr>
           <tr>
             <td class="col-name">ASPIRE In-House Field Study</td>
             <td class="col-count">3,184</td>
             <td class="col-date">2025-02-19</td>
             <td class="col-date">2025-01-08</td>
-            <td><a class="row-arrow" href="portal.html" aria-label="Open Field Study details">→</a></td>
           </tr>
           <tr>
             <td class="col-name">MySpace Legacy Breach</td>
             <td class="col-count">412,310</td>
             <td class="col-date">2024-10-22</td>
             <td class="col-date">2008-08-01</td>
-            <td><a class="row-arrow" href="portal.html" aria-label="Open MySpace details">→</a></td>
           </tr>
           <tr>
             <td class="col-name">CollegeNet Academic Portal</td>
             <td class="col-count">72,489</td>
             <td class="col-date">2024-11-30</td>
             <td class="col-date">2020-11-15</td>
-            <td><a class="row-arrow" href="portal.html" aria-label="Open CollegeNet details">→</a></td>
           </tr>
           <tr>
             <td class="col-name">Adobe Customer Accounts (Truncated)</td>
             <td class="col-count">1,910,887</td>
             <td class="col-date">2024-07-08</td>
             <td class="col-date">2013-10-04</td>
-            <td><a class="row-arrow" href="portal.html" aria-label="Open Adobe details">→</a></td>
           </tr>
           <tr>
             <td class="col-name">Yahoo! Voice Anonymized Subset</td>
             <td class="col-count">582,431</td>
             <td class="col-date">2024-09-19</td>
             <td class="col-date">2012-07-11</td>
-            <td><a class="row-arrow" href="portal.html" aria-label="Open Yahoo Voice details">→</a></td>
           </tr>
           <tr>
             <td class="col-name">Dropbox 2012 Re-issue (Hashed)</td>
             <td class="col-count">689,217</td>
             <td class="col-date">2024-12-14</td>
             <td class="col-date">2012-07-01</td>
-            <td><a class="row-arrow" href="portal.html" aria-label="Open Dropbox details">→</a></td>
           </tr>
           <tr>
             <td class="col-name">ASPIRE Pilot (Spring Semester)</td>
             <td class="col-count">891</td>
             <td class="col-date">2024-05-21</td>
             <td class="col-date">2024-04-12</td>
-            <td><a class="row-arrow" href="portal.html" aria-label="Open ASPIRE Pilot details">→</a></td>
           </tr>
           <tr>
             <td class="col-name">Exploit.in Aggregator (Public Mirror)</td>
             <td class="col-count">593,427</td>
             <td class="col-date">2025-01-09</td>
             <td class="col-date">2016-10-13</td>
-            <td><a class="row-arrow" href="portal.html" aria-label="Open Exploit.in details">→</a></td>
           </tr>
           <tr>
             <td class="col-name">Collection #1 (AntiPublic Style)</td>
             <td class="col-count">772,904,991</td>
             <td class="col-date">2024-06-30</td>
             <td class="col-date">2019-01-07</td>
-            <td><a class="row-arrow" href="portal.html" aria-label="Open Collection #1 details">→</a></td>
           </tr>
           <tr>
             <td class="col-name">ASPIRE — Synthetic Validation Set</td>
             <td class="col-count">12,500</td>
             <td class="col-date">2025-03-04</td>
             <td class="col-date">2025-02-28</td>
-            <td><a class="row-arrow" href="portal.html" aria-label="Open Synthetic Validation details">→</a></td>
           </tr>
         </tbody>
       </table>
@@ -297,7 +282,6 @@
         count:     parseInt(cells[1].textContent.replace(/,/g, ''), 10),
         added:     cells[2].textContent.trim(),
         collected: cells[3].textContent.trim(),
-        actionHtml: cells[4].innerHTML,
         _tr:       tr
       };
     }
@@ -321,7 +305,6 @@
               <div class="record-card-detail"><span>Added</span><strong>${escapeHtml(row.added)}</strong></div>
               <div class="record-card-detail"><span>Collected</span><strong>${escapeHtml(row.collected)}</strong></div>
               <div class="record-card-detail"><span>Entries</span><strong>${row.count.toLocaleString()}</strong></div>
-              <div class="record-card-actions">${row.actionHtml}</div>
             </div>
           </details>
         </article>
@@ -374,6 +357,34 @@
       });
 
     renderMobileCards();
+
+    // ===========================================================
+    // LIVE KPI: Total submissions
+    //   Mirrors the value rendered by portal.html.  The portal
+    //   counts rows in localStorage['aspire_submissions']; we read
+    //   the same key and publish the integer (defaulting to 0 when
+    //   the key is missing or the value cannot be parsed).  We also
+    //   keep a sessionStorage shim so a hand-off can place the
+    //   latest count under 'aspire_total_submissions' without
+    //   rewriting the portal.
+    // ===========================================================
+    (function syncTotalSubmissions() {
+      const kpi = document.getElementById('kpiDatasets');
+      if (!kpi) return;
+      let count = 0;
+      try {
+        const stored = sessionStorage.getItem('aspire_total_submissions');
+        if (stored != null && stored !== '' && !Number.isNaN(Number(stored))) {
+          count = Number(stored);
+        } else {
+          const list = JSON.parse(localStorage.getItem('aspire_submissions') || '[]');
+          count = Array.isArray(list) ? list.length : 0;
+        }
+      } catch (_) {
+        count = 0;
+      }
+      kpi.textContent = String(count);
+    })();
   })();
   </script>
 </body>

@@ -131,6 +131,15 @@
     //   their personal dashboard.  No password is persisted in
     //   plain text — we keep a SHA-1 hash and a per-account
     //   telemetry record.
+    //
+    //   Session model: tab-lifetime, bound to sessionStorage.  The
+    //   active username is written to SESSION_KEY on a successful
+    //   login (and on a successful inline sign-up).  Because the
+    //   browser drops sessionStorage the moment this tab closes,
+    //   there is no need for an inactivity timer, countdown, or
+    //   forced-logout loop.  The single setTimeout below is a
+    //   brief visual error-shake and has nothing to do with the
+    //   session lifecycle.
     // ===========================================================
     const ACCOUNTS_KEY  = 'aspire_accounts';
     const SESSION_KEY   = 'aspire_user_session';
